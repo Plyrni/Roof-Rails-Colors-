@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Lean.Touch;
@@ -14,10 +15,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _normalSpeed;
     [SerializeField] private float xMin;
     [SerializeField] private float xMax;
-    
-    private RigidbodyConstraints _constraintsOnGround = RigidbodyConstraints.FreezeRotation;
-    private RigidbodyConstraints _constraintsOnFall =
-        RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
 
     private float _horizontalMoveAccumulated = 0;
     private bool _isGrounded;
@@ -32,15 +29,15 @@ public class PlayerMovement : MonoBehaviour
         _currentSpeed = _normalSpeed;
     }
 
+
     private void FixedUpdate()
     {
         MoveForward();
         MoveHorizontally();
 
         UpdateIsGrounded();
-        UpdateConstraints();
+        ClampPlayerPos();
     }
-
 
     private void ManageInputs(List<LeanFinger> fingers)
     {
@@ -64,6 +61,11 @@ public class PlayerMovement : MonoBehaviour
         currentVelocity.x = _horizontalMoveAccumulated;
         _rigid.velocity = currentVelocity;
         _horizontalMoveAccumulated = 0;
+    } 
+    Vector3 PredictPosition(Rigidbody rb, float timeAhead)
+    {
+        // Predict future position based on current velocity and time ahead
+        return rb.position + rb.velocity * timeAhead;
     }
 
     private void UpdateIsGrounded()
@@ -78,9 +80,17 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void UpdateConstraints()
+    private void ClampPlayerPos()
     {
-        _rigid.constraints = _isGrounded ? _constraintsOnGround : _constraintsOnFall;
+        float posX = PredictPosition(_rigid,Time.fixedDeltaTime).x;
+        if (posX < xMin || posX > xMax)
+        {
+            float newPosX = posX < 0 ? xMin : xMax;
+            Vector3 newVel = _rigid.velocity;
+            newVel.x = 0;
+            _rigid.velocity = newVel;
+            this.transform.position = new Vector3(newPosX, this.transform.position.y, this.transform.position.z);
+        }
     }
 
     private void OnDestroy()

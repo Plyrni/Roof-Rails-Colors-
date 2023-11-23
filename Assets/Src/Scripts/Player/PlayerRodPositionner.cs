@@ -20,6 +20,7 @@ public class PlayerRodPositionner : MonoBehaviour
         _playerOwner = GetComponentInParent<Player>();
         _rod = GetComponent<RodCutable>();
         _timeSinceCut = Mathf.Infinity;
+
     }
 
     private void Start()

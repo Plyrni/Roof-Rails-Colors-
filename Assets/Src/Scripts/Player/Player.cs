@@ -10,17 +10,16 @@ public class Player : MonoBehaviour
 {
     public PlayerMovement MovementComponent => _movement;
     public RodCutable Rod => _rod;
-    
+    public Rigidbody Rigidbody => _rigidbody;
+
     [SerializeField] private float sensivity;
     [SerializeField] private RodCutable _rod;
     private PlayerMovement _movement;
+    private Rigidbody _rigidbody;
 
     private void Awake()
     {
         _movement = GetComponent<PlayerMovement>();
-    }
-
-    void Start()
-    {
+        _rigidbody = GetComponent<Rigidbody>();
     }
 }
