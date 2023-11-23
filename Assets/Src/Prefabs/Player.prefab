@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 749373204403210412}
-  m_Layer: 0
+  - component: {fileID: 1203996122}
+  m_Layer: 3
   m_Name: Human
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32,6 +33,20 @@ Transform:
   m_Father: {fileID: 749373205411881103}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &1203996122
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749373204403210413}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &749373205119132299
 GameObject:
   m_ObjectHideFlags: 0
@@ -45,7 +60,8 @@ GameObject:
   - component: {fileID: 749373205119132296}
   - component: {fileID: 804463282069954757}
   - component: {fileID: 1804148545}
-  m_Layer: 0
+  - component: {fileID: 1804148550}
+  m_Layer: 8
   m_Name: MasterRod
   m_TagString: Rod
   m_Icon: {fileID: 0}
@@ -143,7 +159,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73b3bef7f11c37349bd259ef31d7537d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onCut:
+    m_PersistentCalls:
+      m_Calls: []
   prefabRod2m: {fileID: 8778778186297236865, guid: 0626b6d8c94762d4ebbdaa5f6534a5bd, type: 3}
+--- !u!114 &1804148550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749373205119132299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26edf23734cb0f84db4c86fe5fdd23a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &749373205411881088
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,8 +237,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa6a770ed0d218b49a50c1e688974c74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onGroundedStateChange:
+    m_PersistentCalls:
+      m_Calls: []
   _sensivity: 0.09
-  _normalSpeed: 0
+  _normalSpeed: 500
+  xMin: -3.74
+  xMax: 3.74
 --- !u!54 &749373205411881102
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -233,7 +269,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 749373205506826732}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -267,8 +303,7 @@ GameObject:
   - component: {fileID: 749373205675393997}
   - component: {fileID: 749373205675393994}
   - component: {fileID: 749373205675393995}
-  - component: {fileID: 749373205675393996}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -340,17 +375,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &749373205675393996
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 749373205675393998}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}

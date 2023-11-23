@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class RodCutable : MonoBehaviour
 {
+    [HideInInspector] public UnityEvent onCut;
+    
     [SerializeField] private GameObject prefabRod2m;
     private float currentLength => this.transform.localScale.y * 2f;
     
@@ -25,7 +28,8 @@ public class RodCutable : MonoBehaviour
         ScaleRod(this.gameObject, currentLength - lengthToCut);
         // Reposition master Rod
         this.transform.localPosition = this.transform.localPosition + -GetCutDirection(cutSide) * (lengthToCut / 2f);
-
+        
+        onCut?.Invoke();
         return fakeRod;
     }
     public void SetSize(float length)
@@ -37,9 +41,11 @@ public class RodCutable : MonoBehaviour
     {
         GameObject fakeRod = Instantiate(prefabRod2m);
         ScaleRod(fakeRod, length);
+        
         // Position fake rod
         fakeRod.transform.position = this.transform.position + cutLocalPos + GetCutDirection(side) * (length/2f);
         fakeRod.transform.rotation = this.transform.rotation;
+        
         return fakeRod;
     }
     private Vector3 ProjectOnRod(Vector3 hitPos)

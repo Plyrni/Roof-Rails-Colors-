@@ -8,11 +8,15 @@ using UnityEngine.PlayerLoop;
 
 public class Player : MonoBehaviour
 {
+    public PlayerMovement MovementComponent => _movement;
+    
     [SerializeField] private float sensivity;
     [SerializeField] private RodCutable _rod;
+    private PlayerMovement _movement;
 
     private void Awake()
     {
+        _movement = GetComponent<PlayerMovement>();
     }
 
     void Start()

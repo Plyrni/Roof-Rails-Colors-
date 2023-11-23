@@ -2,18 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using Lean.Touch;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [HideInInspector] public UnityEvent<bool> onGroundedStateChange;
+    public bool IsGrounded => _isGrounded;
+
     [SerializeField] private float _sensivity;
     [SerializeField] private float _normalSpeed;
-    private RigidbodyConstraints constraintsOnGround = RigidbodyConstraints.FreezeRotation;
-    private RigidbodyConstraints constraintsNotOnGround = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
+    [SerializeField] private float xMin;
+    [SerializeField] private float xMax;
+    
+    private RigidbodyConstraints _constraintsOnGround = RigidbodyConstraints.FreezeRotation;
+    private RigidbodyConstraints _constraintsOnFall =
+        RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
 
     private float _horizontalMoveAccumulated = 0;
     private bool _isGrounded;
     private float _currentSpeed;
-
     private Rigidbody _rigid;
 
     private void Awake()
@@ -28,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     {
         MoveForward();
         MoveHorizontally();
-        
+
         UpdateIsGrounded();
         UpdateConstraints();
     }
@@ -49,6 +57,7 @@ public class PlayerMovement : MonoBehaviour
         currentVelocity.z = _currentSpeed * Time.fixedDeltaTime;
         _rigid.velocity = currentVelocity;
     }
+
     private void MoveHorizontally()
     {
         Vector3 currentVelocity = _rigid.velocity;
@@ -56,13 +65,26 @@ public class PlayerMovement : MonoBehaviour
         _rigid.velocity = currentVelocity;
         _horizontalMoveAccumulated = 0;
     }
+
     private void UpdateIsGrounded()
     {
         Ray rayDown = new Ray(this.transform.position + Vector3.up * 0.01f, Vector3.down);
-        _isGrounded = Physics.Raycast(rayDown, 0.02f);
+        bool newGroundedState = Physics.Raycast(rayDown, 0.02f);
+
+        if (newGroundedState != _isGrounded)
+        {
+            _isGrounded = newGroundedState;
+            onGroundedStateChange?.Invoke(_isGrounded);
+        }
     }
+
     private void UpdateConstraints()
     {
-        _rigid.constraints = _isGrounded ? constraintsOnGround : constraintsNotOnGround;
+        _rigid.constraints = _isGrounded ? _constraintsOnGround : _constraintsOnFall;
+    }
+
+    private void OnDestroy()
+    {
+        onGroundedStateChange.RemoveAllListeners();
     }
 }
