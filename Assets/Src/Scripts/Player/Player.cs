@@ -22,7 +22,26 @@ public class Player : MonoBehaviour
     {
         _movement = GetComponent<PlayerMovement>();
         _rigidbody = GetComponent<Rigidbody>();
-        
+        Game.OnChangeState.AddListener(OnChangeState);
+        Reset();
+    }
+
+    public void Reset()
+    {
+        this.transform.position = Vector3.zero + Vector3.up * 0.01f;
         _rod.SetSize(2f);
+    }
+
+    private void OnChangeState(GameState newState)
+    {
+        if (newState == GameState.Lose)
+        {
+            _rigidbody.constraints = RigidbodyConstraints.None;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        Game.OnChangeState.RemoveListener(OnChangeState);
     }
 }

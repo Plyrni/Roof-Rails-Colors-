@@ -35,23 +35,26 @@ public class Game : MonoBehaviour
 
         instance._state = newState;
         _OnChangeState(State);
+        Debug.Log("[Game] New GameState : " + State);
         OnChangeState?.Invoke(newState);
     }
 
     /// <summary>
-    /// Do whatever needs to be done, but do it before everything.
+    /// Do whatever needs to be done, but do it before the event is called.
     /// </summary>
     /// <param name="newState"></param>
     /// <exception cref="ArgumentOutOfRangeException">Switch needs maintenance</exception>
     private static void _OnChangeState(GameState newState)
     {
+        // TODO : StateMachine
         switch (newState)
         {
             case GameState.NONE:
-                Debug.LogError("You better no be there");
+                Debug.LogError("How are you even here ?");
                 break;
             case GameState.Home:
                 instance._mapManager.SpawnLevel(DataManager.GetLevel());
+                Player.Reset();
                 break;
             case GameState.Playing:
                 break;
@@ -63,9 +66,11 @@ public class Game : MonoBehaviour
         }
     }
 
-    private void ManageInputs(List<LeanFinger> fingers)
+    protected virtual void ManageInputs(List<LeanFinger> fingers)
     {
         LeanFinger finger = fingers[0];
+        
+        // TODO : StateMachine
         switch (State)
         {
             case GameState.Home:

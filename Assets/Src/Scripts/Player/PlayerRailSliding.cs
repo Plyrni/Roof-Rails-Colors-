@@ -22,7 +22,6 @@ public class PlayerRailSliding : MonoBehaviour
             if (nbRailEntered == 1)
             {
                 Game.ChangeState(GameState.Lose);
-                _player.Rigidbody.constraints = RigidbodyConstraints.None;
             }
         }
     }

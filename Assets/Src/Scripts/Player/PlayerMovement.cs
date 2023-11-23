@@ -26,9 +26,22 @@ public class PlayerMovement : MonoBehaviour
     {
         _rigid = GetComponent<Rigidbody>();
         LeanTouch.OnGesture += ManageInputs;
-
+        Game.OnChangeState.AddListener(OnChangeState);
+        
         _currentSpeed = _normalSpeed;
     }
+
+    private void OnChangeState(GameState newState)
+    {
+        if (newState != GameState.Playing)
+        {
+            if (_isGrounded)
+            {
+                _rigid.velocity = Vector3.zero;
+            }
+        }
+    }
+
     private void FixedUpdate()
     {
         if (Game.State != GameState.Playing)
@@ -109,5 +122,6 @@ public class PlayerMovement : MonoBehaviour
     private void OnDestroy()
     {
         onGroundedStateChange.RemoveAllListeners();
+        Game.OnChangeState.RemoveListener(OnChangeState);
     }
 }
