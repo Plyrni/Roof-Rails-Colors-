@@ -85,7 +85,7 @@ public class Saw : MonoBehaviour
             return;
         }
 
-        Vector3 dirEjection = (-this.transform.forward + Vector3.up * 0.75f).normalized * _ejectionForce;
+        Vector3 dirEjection = (-this.transform.forward + -Vector3.up * 0.25f).normalized * _ejectionForce;
         rigid.AddForce(dirEjection, ForceMode.Impulse);
         
         Vector3 torqueDir = -(cutRod.transform.position - cutPos).normalized.x * Vector3.up;

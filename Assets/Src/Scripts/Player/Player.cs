@@ -9,6 +9,7 @@ using UnityEngine.PlayerLoop;
 public class Player : MonoBehaviour
 {
     public PlayerMovement MovementComponent => _movement;
+    public RodCutable Rod => _rod;
     
     [SerializeField] private float sensivity;
     [SerializeField] private RodCutable _rod;

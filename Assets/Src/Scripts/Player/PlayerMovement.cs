@@ -68,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateIsGrounded()
     {
-        Ray rayDown = new Ray(this.transform.position + Vector3.up * 0.01f, Vector3.down);
+        Ray rayDown = new Ray(this.transform.position + this.transform.up * 0.01f, -this.transform.up);
         bool newGroundedState = Physics.Raycast(rayDown, 0.02f);
 
         if (newGroundedState != _isGrounded)

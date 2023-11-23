@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -31,6 +32,11 @@ public class RodCutable : MonoBehaviour
         
         onCut?.Invoke();
         return fakeRod;
+    }
+
+    public void AddSize(float add)
+    {
+        SetSize(currentLength+add);
     }
     public void SetSize(float length)
     {

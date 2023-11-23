@@ -93,7 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8803497258874234894}
   - component: {fileID: 8803497258874234892}
-  - component: {fileID: 8803497258874234893}
+  - component: {fileID: 7769467590714522444}
   m_Layer: 0
   m_Name: Pickup_Rod
   m_TagString: Untagged
@@ -130,7 +130,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0.25, z: 0}
---- !u!114 &8803497258874234893
+--- !u!114 &7769467590714522444
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -139,10 +139,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8803497258874234889}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c86039164f92c9e4fbb4ff15e8e673d3, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d29e1401a98fc2478273ea2f636a54e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tagsAccepted: []
+  tagsAccepted:
+  - Player
+  sizeToAdd: 0.6
+  vfxPickup: {fileID: 2079096086071143462, guid: 562ff5034205d2245a1e0f0fc1bb08dd, type: 3}
 --- !u!1 &8803497259653699298
 GameObject:
   m_ObjectHideFlags: 0

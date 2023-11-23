@@ -276,7 +276,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27bc4e3882a23034a8ba929e2a12de71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 1977974474592478014}
+  _ejectionForce: 5
+  _ejectionTorqueForce: 75
+  _animator: {fileID: 1977974474592478014}
 --- !u!54 &1353850135
 Rigidbody:
   m_ObjectHideFlags: 0
