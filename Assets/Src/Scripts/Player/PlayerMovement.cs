@@ -17,14 +17,22 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float xMin;
     [SerializeField] private float xMax;
 
+    private Rigidbody rigid => _rigid ??= GetComponent<Rigidbody>();
     private float _horizontalMoveAccumulated = 0;
     private bool _isGrounded;
     private float _currentSpeed;
     private Rigidbody _rigid;
 
+    public void Reset()
+    {
+        rigid.angularVelocity = Vector3.zero;
+        rigid.velocity = Vector3.zero;
+        rigid.constraints = RigidbodyConstraints.FreezeRotation;
+        _horizontalMoveAccumulated = 0f;
+    }
+    
     private void Awake()
     {
-        _rigid = GetComponent<Rigidbody>();
         LeanTouch.OnGesture += ManageInputs;
         Game.OnChangeState.AddListener(OnChangeState);
         
@@ -37,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (_isGrounded)
             {
-                _rigid.velocity = Vector3.zero;
+                rigid.velocity = Vector3.zero;
             }
         }
     }
@@ -54,13 +62,13 @@ public class PlayerMovement : MonoBehaviour
         Vector3 velocity = ComputeMoveVelocity();
         
         // Reset gravity force if on ground
-        if (_isGrounded && _rigid.velocity.x < 0)
+        if (_isGrounded && rigid.velocity.x < 0)
         {
             velocity.y = 0;
         }
         
         // Apply velocity
-        _rigid.velocity = velocity;
+        rigid.velocity = velocity;
         
         ClampPlayerPos();
     }
@@ -76,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 ComputeMoveVelocity()
     {
-        Vector3 tempVelocity = _rigid.velocity;
+        Vector3 tempVelocity = rigid.velocity;
 
         // Forward
         tempVelocity.z = _currentSpeed * Time.fixedDeltaTime;
@@ -108,17 +116,27 @@ public class PlayerMovement : MonoBehaviour
 
     private void ClampPlayerPos()
     {
-        float posX = PredictPosition(_rigid, Time.fixedDeltaTime).x;
+        float posX = PredictPosition(rigid, Time.fixedDeltaTime).x;
         if (posX < xMin || posX > xMax)
         {
             float newPosX = posX < 0 ? xMin : xMax;
-            Vector3 newVel = _rigid.velocity;
+            Vector3 newVel = rigid.velocity;
             newVel.x = 0;
-            _rigid.velocity = newVel;
+            rigid.velocity = newVel;
             this.transform.position = new Vector3(newPosX, this.transform.position.y, this.transform.position.z);
         }
     }
+    
+    
+    private Rigidbody GetRigidBody()
+    {
+        if (_rigid == null)
+        {
+            _rigid ??= GetComponent<Rigidbody>();
+        }
 
+        return _rigid;
+    }
     private void OnDestroy()
     {
         onGroundedStateChange.RemoveAllListeners();

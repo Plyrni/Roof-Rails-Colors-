@@ -8,9 +8,9 @@ using UnityEngine.PlayerLoop;
 
 public class Player : MonoBehaviour
 {
-    public PlayerMovement MovementComponent => _movement;
+    public PlayerMovement MovementComponent => _movement ??= GetComponent<PlayerMovement>();
     public RodCutable Rod => _rod;
-    public Rigidbody Rigidbody => _rigidbody;
+    public Rigidbody Rigidbody => _rigidbody ??= GetComponent<Rigidbody>();
 
     [SerializeField] private float sensivity;
     [SerializeField] private float _baseRodeSize;
@@ -20,15 +20,15 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        _movement = GetComponent<PlayerMovement>();
-        _rigidbody = GetComponent<Rigidbody>();
         Game.OnChangeState.AddListener(OnChangeState);
         Reset();
     }
 
     public void Reset()
     {
-        this.transform.position = Vector3.zero + Vector3.up * 0.01f;
+        Rigidbody.MovePosition(Vector3.zero + Vector3.up * 0.01f);
+        Rigidbody.MoveRotation(Quaternion.identity);
+        MovementComponent.Reset();
         _rod.SetSize(2f);
     }
 
@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
     {
         if (newState == GameState.Lose)
         {
-            _rigidbody.constraints = RigidbodyConstraints.None;
+            Rigidbody.constraints = RigidbodyConstraints.None;
         }
     }
 
