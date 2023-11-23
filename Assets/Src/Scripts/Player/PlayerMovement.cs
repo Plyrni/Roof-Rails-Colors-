@@ -40,7 +40,6 @@ public class PlayerMovement : MonoBehaviour
         if (finger.IsActive && !finger.StartedOverGui)
         {
             _horizontalMoveAccumulated += finger.ScaledDelta.x * _sensivity;
-            Debug.Log(_horizontalMoveAccumulated);
         }
     }
 

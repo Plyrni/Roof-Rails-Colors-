@@ -6,6 +6,7 @@ public class RodCutable : MonoBehaviour
 {
     [SerializeField] private GameObject prefabRod2m;
     private float currentLength => this.transform.localScale.y * 2f;
+    
     private enum CutSide
     {
         Left = -1,
@@ -14,23 +15,31 @@ public class RodCutable : MonoBehaviour
 
     public GameObject CutFromHitPos(Vector3 hitPos)
     {
-        Vector3 posOnRod = ProjectOnRod(hitPos);
+        Vector3 posOnRod = ProjectOnRod(hitPos - this.transform.position);
         float distFromCenter = posOnRod.magnitude;
         CutSide cutSide = ComputeCutSide(posOnRod);
         float lengthToCut = (currentLength/2) - distFromCenter;
-        
-        // Instanciate fake cuted rod
-        GameObject fakeRod = Instantiate(prefabRod2m);
-        ScaleRod(fakeRod, lengthToCut);
-        // Position fake rod
-        fakeRod.transform.position = this.transform.position + posOnRod + GetCutDirection(cutSide) * (lengthToCut / 2f);
-        fakeRod.transform.rotation = this.transform.rotation;
-        
+
+        GameObject fakeRod = GenerateFakeRod(posOnRod, cutSide, lengthToCut);
         // Resize master rod 
         ScaleRod(this.gameObject, currentLength - lengthToCut);
         // Reposition master Rod
         this.transform.localPosition = this.transform.localPosition + -GetCutDirection(cutSide) * (lengthToCut / 2f);
 
+        return fakeRod;
+    }
+    public void SetSize(float length)
+    {
+        ScaleRod(this.gameObject,length);
+    }
+
+    private GameObject GenerateFakeRod(Vector3 cutLocalPos,CutSide side,float length)
+    {
+        GameObject fakeRod = Instantiate(prefabRod2m);
+        ScaleRod(fakeRod, length);
+        // Position fake rod
+        fakeRod.transform.position = this.transform.position + cutLocalPos + GetCutDirection(side) * (length/2f);
+        fakeRod.transform.rotation = this.transform.rotation;
         return fakeRod;
     }
     private Vector3 ProjectOnRod(Vector3 hitPos)
@@ -44,7 +53,8 @@ public class RodCutable : MonoBehaviour
     }
     private void ScaleRod(GameObject rod, float length)
     {
-        rod.transform.localScale = new Vector3(this.transform.localScale.x,length/2f,this.transform.localScale.z);
+        Vector3 localScale = this.transform.localScale;
+        rod.transform.localScale = new Vector3(localScale.x,length/2f,localScale.z);
     }
     private Vector3 GetCutDirection(CutSide side)
     {

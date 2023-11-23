@@ -18,21 +18,4 @@ public class Player : MonoBehaviour
     void Start()
     {
     }
-
-    private float timeToCut = 2f;
-    private float currentTime;
-    private bool _hasCut;
-
-    void Update()
-    {
-        if (!_hasCut)
-        {
-            currentTime += Time.deltaTime;
-            if (currentTime >= timeToCut)
-            {
-                _rod.CutFromHitPos(_rod.transform.position + _rod.transform.up * -0.5f);
-                _hasCut = true;
-            }
-        }
-    }
 }

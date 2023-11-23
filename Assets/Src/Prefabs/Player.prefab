@@ -44,9 +44,10 @@ GameObject:
   - component: {fileID: 749373205119132407}
   - component: {fileID: 749373205119132296}
   - component: {fileID: 804463282069954757}
+  - component: {fileID: 1804148545}
   m_Layer: 0
   m_Name: MasterRod
-  m_TagString: Untagged
+  m_TagString: Rod
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -60,7 +61,7 @@ Transform:
   m_GameObject: {fileID: 749373205119132299}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 1.1, z: 0.719}
-  m_LocalScale: {x: 0.43431, y: 2.5, z: 0.43431}
+  m_LocalScale: {x: 0.45, y: 2.5, z: 0.45}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 749373205411881103}
@@ -130,6 +131,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1804148545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749373205119132299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73b3bef7f11c37349bd259ef31d7537d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabRod2m: {fileID: 8778778186297236865, guid: 0626b6d8c94762d4ebbdaa5f6534a5bd, type: 3}
 --- !u!1 &749373205411881088
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,6 +193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sensivity: 0.09
+  _rod: {fileID: 1804148545}
 --- !u!114 &749373205411881100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,7 +207,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sensivity: 0.09
-  _normalSpeed: 500
+  _normalSpeed: 0
 --- !u!54 &749373205411881102
 Rigidbody:
   m_ObjectHideFlags: 0
