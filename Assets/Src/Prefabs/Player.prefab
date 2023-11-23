@@ -227,6 +227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sensivity: 0.09
+  _baseRodeSize: 2
   _rod: {fileID: 1804148545}
 --- !u!114 &749373205411881100
 MonoBehaviour:

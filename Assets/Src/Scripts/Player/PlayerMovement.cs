@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Lean.Touch;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 public class PlayerMovement : MonoBehaviour
@@ -28,14 +29,26 @@ public class PlayerMovement : MonoBehaviour
 
         _currentSpeed = _normalSpeed;
     }
-
-
     private void FixedUpdate()
     {
-        MoveForward();
-        MoveHorizontally();
+        if (Game.State != GameState.Playing)
+        {
+            return;
+        }
 
         UpdateIsGrounded();
+        
+        Vector3 velocity = ComputeMoveVelocity();
+        
+        // Reset gravity force if on ground
+        if (_isGrounded && _rigid.velocity.x < 0)
+        {
+            velocity.y = 0;
+        }
+        
+        // Apply velocity
+        _rigid.velocity = velocity;
+        
         ClampPlayerPos();
     }
 
@@ -48,20 +61,20 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void MoveForward()
+    private Vector3 ComputeMoveVelocity()
     {
-        Vector3 currentVelocity = _rigid.velocity;
-        currentVelocity.z = _currentSpeed * Time.fixedDeltaTime;
-        _rigid.velocity = currentVelocity;
+        Vector3 tempVelocity = _rigid.velocity;
+
+        // Forward
+        tempVelocity.z = _currentSpeed * Time.fixedDeltaTime;
+
+        // Horizontaly
+        tempVelocity.x = _horizontalMoveAccumulated;
+        _horizontalMoveAccumulated = 0;
+
+        return tempVelocity;
     }
 
-    private void MoveHorizontally()
-    {
-        Vector3 currentVelocity = _rigid.velocity;
-        currentVelocity.x = _horizontalMoveAccumulated;
-        _rigid.velocity = currentVelocity;
-        _horizontalMoveAccumulated = 0;
-    } 
     Vector3 PredictPosition(Rigidbody rb, float timeAhead)
     {
         // Predict future position based on current velocity and time ahead
@@ -82,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void ClampPlayerPos()
     {
-        float posX = PredictPosition(_rigid,Time.fixedDeltaTime).x;
+        float posX = PredictPosition(_rigid, Time.fixedDeltaTime).x;
         if (posX < xMin || posX > xMax)
         {
             float newPosX = posX < 0 ? xMin : xMax;

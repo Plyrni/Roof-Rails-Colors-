@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     public Rigidbody Rigidbody => _rigidbody;
 
     [SerializeField] private float sensivity;
+    [SerializeField] private float _baseRodeSize;
     [SerializeField] private RodCutable _rod;
     private PlayerMovement _movement;
     private Rigidbody _rigidbody;
@@ -21,5 +22,7 @@ public class Player : MonoBehaviour
     {
         _movement = GetComponent<PlayerMovement>();
         _rigidbody = GetComponent<Rigidbody>();
+        
+        _rod.SetSize(2f);
     }
 }

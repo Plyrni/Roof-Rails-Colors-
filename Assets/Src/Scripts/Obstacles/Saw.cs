@@ -67,7 +67,7 @@ public class Saw : MonoBehaviour
     {
         if (rod != null)
         {
-            Vector3 playerDirection = Game.Instance.player.transform.position - this.transform.position;
+            Vector3 playerDirection = Game.Player.transform.position - this.transform.position;
             Vector3 offset = (Vector3.right * Mathf.Sign(playerDirection.x)) * HalfSize;
             Vector3 cutPos = this.transform.position + offset;
             GameObject fakeRod = rod.CutFromHitPos(cutPos);

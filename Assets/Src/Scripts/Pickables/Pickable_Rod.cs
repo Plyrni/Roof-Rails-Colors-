@@ -8,7 +8,7 @@ public class Pickable_Rod : ItemPickable
     [SerializeField] private ParticleSystem vfxPickup;
     protected override void OnValidColliderDetected(Collider other)
     {
-        Game.Instance.player.Rod.AddSize(sizeToAdd);
+        Game.Player.Rod.AddSize(sizeToAdd);
 
         Instantiate(vfxPickup, this.transform.position, vfxPickup.transform.rotation,Game.Instance.transform);
         
