@@ -1211,7 +1211,7 @@ GameObject:
   - component: {fileID: 1161549077}
   - component: {fileID: 1161549076}
   m_Layer: 0
-  m_Name: Btn-Again
+  m_Name: Btn-Retry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1710,17 +1710,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1199564258}
     m_Modifications:
-    - target: {fileID: 1804148550, guid: 8abc43732b5d371479c9d03120985192, type: 3}
-      propertyPath: _lerpSpeed
-      value: 50
-      objectReference: {fileID: 0}
     - target: {fileID: 749373205411881088, guid: 8abc43732b5d371479c9d03120985192, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 749373205411881100, guid: 8abc43732b5d371479c9d03120985192, type: 3}
+      propertyPath: _sensivity
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 749373205411881102, guid: 8abc43732b5d371479c9d03120985192, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 749373205411881103, guid: 8abc43732b5d371479c9d03120985192, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 749373205411881103, guid: 8abc43732b5d371479c9d03120985192, type: 3}
       propertyPath: m_LocalPosition.x

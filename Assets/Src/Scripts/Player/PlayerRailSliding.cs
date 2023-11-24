@@ -7,6 +7,12 @@ public class PlayerRailSliding : MonoBehaviour
 {
     private Player _player;
     private int nbRailEntered = 0;
+
+    public void Reset()
+    {
+        nbRailEntered = 0;
+    }
+
     private void Awake()
     {
         _player = GetComponent<Player>();
@@ -28,12 +34,20 @@ public class PlayerRailSliding : MonoBehaviour
 
     private void OnMasterRodEnterRail()
     {
-        nbRailEntered += 1;
+        if (Game.State == GameState.Playing)
+        {
+            nbRailEntered += 1;
+        }
     }
+
     private void OnMasterRodExitRail()
     {
-        nbRailEntered -= 1;
+        if (Game.State == GameState.Playing)
+        {
+            nbRailEntered -= 1;
+        }
     }
+
     private void OnDestroy()
     {
         Rail.OnMasterRodEnter.RemoveListener(OnMasterRodEnterRail);

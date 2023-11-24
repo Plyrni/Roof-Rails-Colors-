@@ -29,13 +29,15 @@ public class PlayerMovement : MonoBehaviour
         rigid.velocity = Vector3.zero;
         rigid.constraints = RigidbodyConstraints.FreezeRotation;
         _horizontalMoveAccumulated = 0f;
+
+        Application.targetFrameRate = -1;
     }
-    
+
     private void Awake()
     {
         LeanTouch.OnGesture += ManageInputs;
         Game.OnChangeState.AddListener(OnChangeState);
-        
+
         _currentSpeed = _normalSpeed;
     }
 
@@ -58,18 +60,18 @@ public class PlayerMovement : MonoBehaviour
         }
 
         UpdateIsGrounded();
-        
+
         Vector3 velocity = ComputeMoveVelocity();
-        
+
         // Reset gravity force if on ground
         if (_isGrounded && rigid.velocity.x < 0)
         {
             velocity.y = 0;
         }
-        
+
         // Apply velocity
         rigid.velocity = velocity;
-        
+
         ClampPlayerPos();
     }
 
@@ -78,19 +80,21 @@ public class PlayerMovement : MonoBehaviour
         LeanFinger finger = fingers[0];
         if (finger.IsActive && !finger.StartedOverGui)
         {
-            _horizontalMoveAccumulated += finger.ScaledDelta.x * _sensivity;
+            _horizontalMoveAccumulated += (finger.ScreenDelta.x / Screen.width) * _sensivity;
+            //_horizontalMoveAccumulated += finger.ScaledDelta.x * _sensivity;
         }
     }
 
     private Vector3 ComputeMoveVelocity()
     {
         Vector3 tempVelocity = rigid.velocity;
-
+        Debug.Log("[Movement]Frame" + Time.frameCount + " _horizontalMove = " + _horizontalMoveAccumulated);
         // Forward
         tempVelocity.z = _currentSpeed * Time.fixedDeltaTime;
 
         // Horizontaly
-        tempVelocity.x = _horizontalMoveAccumulated;
+        tempVelocity.x = _horizontalMoveAccumulated; // Sensi = 0.09f
+        //tempVelocity.x = _horizontalMoveAccumulated * Time.fixedDeltaTime; // Sensi = 5
         _horizontalMoveAccumulated = 0;
 
         return tempVelocity;
@@ -126,8 +130,8 @@ public class PlayerMovement : MonoBehaviour
             this.transform.position = new Vector3(newPosX, this.transform.position.y, this.transform.position.z);
         }
     }
-    
-    
+
+
     private Rigidbody GetRigidBody()
     {
         if (_rigid == null)
@@ -137,6 +141,7 @@ public class PlayerMovement : MonoBehaviour
 
         return _rigid;
     }
+
     private void OnDestroy()
     {
         onGroundedStateChange.RemoveAllListeners();

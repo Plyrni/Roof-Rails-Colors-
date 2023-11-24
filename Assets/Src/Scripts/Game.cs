@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Lean.Touch;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 [DefaultExecutionOrder(-1)]
 public class Game : MonoBehaviour
@@ -11,6 +12,7 @@ public class Game : MonoBehaviour
     public static Player Player => Instance._player;
     public static GameState State => Instance._state;
     public static DataManager DataManager => Instance._dataManager;
+    public static Scene Map => instance._mapManager.CurrentScene;
     public static readonly UnityEvent<GameState> OnChangeState = new UnityEvent<GameState>();
 
     private static Game instance;

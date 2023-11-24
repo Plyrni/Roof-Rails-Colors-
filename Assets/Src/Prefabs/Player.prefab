@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _waitTimeToCenterRod: 0.25
-  _lerpSpeed: 10
+  _lerpSpeed: 50
 --- !u!1 &749373205411881088
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,7 +244,7 @@ MonoBehaviour:
   onGroundedStateChange:
     m_PersistentCalls:
       m_Calls: []
-  _sensivity: 0.09
+  _sensivity: 5
   _normalSpeed: 500
   xMin: -3.65
   xMax: 3.65
