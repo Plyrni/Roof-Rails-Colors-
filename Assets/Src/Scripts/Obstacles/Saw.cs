@@ -15,7 +15,10 @@ public class Saw : MonoBehaviour
     [FormerlySerializedAs("animator")] [SerializeField]
     private Animator _animator;
 
-    private bool _triggerEntered = false;
+    private int nbValidColliderThatEnteredTrigger = 0;
+    private bool _isTriggerPenetratedByValidCollider = false;
+
+
 
     protected virtual void Awake()
     {
@@ -31,7 +34,8 @@ public class Saw : MonoBehaviour
     {
         if (IsValidCollider(other))
         {
-            _triggerEntered = true;
+            _isTriggerPenetratedByValidCollider = true;
+            nbValidColliderThatEnteredTrigger++;
         }
     }
 
@@ -39,37 +43,48 @@ public class Saw : MonoBehaviour
     {
         if (IsValidCollider(other))
         {
-            _triggerEntered = false;
+            nbValidColliderThatEnteredTrigger--;
+            if (nbValidColliderThatEnteredTrigger <= 0)
+            {
+                _isTriggerPenetratedByValidCollider = false;
+            }
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (_triggerEntered == false)
+        if (_isTriggerPenetratedByValidCollider == false)
         {
             return;
         }
 
         if (IsValidCollider(other))
         {
-            OnValidColliderStay(other);
+            OnValidPenetrationStay(other);
         }
     }
 
     protected virtual bool IsValidCollider(Collider other)
     {
-        if (other.gameObject.CompareTag("Rod"))
+        if (other.gameObject.CompareTag("Rod") || other.gameObject.CompareTag("Player"))
         {
             return true;
         }
+
         return false;
     }
 
-    protected virtual void OnValidColliderStay(Collider validCollider)
+    protected virtual void OnValidPenetrationStay(Collider validCollider)
     {
         RodCutable rodCutable = validCollider.gameObject.GetComponent<RodCutable>();
-        CutRodThatEntered(rodCutable);
+        if (rodCutable)
+        {
+            CutRodThatEntered(rodCutable);
+            return;
+        }
     }
+
+
 
     private void CutRodThatEntered(RodCutable rod)
     {

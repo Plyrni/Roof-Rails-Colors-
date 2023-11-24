@@ -22,12 +22,12 @@ public class TeamSaw : Saw
     {
         if (newTeamColor == _teamColorElement.Team)
         {
-             Hide();    
+            Hide();
         }
         else
         {
             Show();
-        }     
+        }
     }
 
     protected override bool IsValidCollider(Collider other)
@@ -40,23 +40,29 @@ public class TeamSaw : Saw
                 return true;
             }
         }
+
         return false;
     }
 
     private void Show()
     {
+        saw.transform.DOKill();
         saw.transform.DOLocalMove(Vector3.zero, 0.3f).SetEase(Ease.OutBack);
         playerCollider.SetActive(true);
+        EnableRotation(true);
     }
 
     private void Hide()
     {
+        saw.transform.DOKill();
         saw.transform.DOLocalMove(posSawHidden.localPosition, 0.3f).SetEase(Ease.InBack);
         playerCollider.SetActive(false);
+        EnableRotation(false);
     }
 
     private void OnDestroy()
     {
+        saw.transform.DOKill();
         Game.Player.TeamColorManager.onCurrentTeamColorChange.RemoveListener(OnPlayerChangeColor);
     }
 }

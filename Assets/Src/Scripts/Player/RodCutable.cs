@@ -10,7 +10,8 @@ public class RodCutable : MonoBehaviour
     [HideInInspector] public UnityEvent onCut;
     
     [SerializeField] private GameObject prefabRod2m;
-    private float currentLength => this.transform.localScale.y * 2f;
+    private float currentLength => this.transform.localScale.x * 2f;
+    //private float currentLength => this.transform.localScale.y * 2f;
     
     private enum CutSide
     {
@@ -58,21 +59,25 @@ public class RodCutable : MonoBehaviour
     }
     private Vector3 ProjectOnRod(Vector3 hitPos)
     {
-        return Vector3.Project(hitPos, transform.up);
+        return Vector3.Project(hitPos, transform.right);
+        //return Vector3.Project(hitPos, transform.up);
     }
     private CutSide ComputeCutSide(Vector3 posOnRod)
     {
-        float dot = Vector3.Dot(posOnRod.normalized, transform.up);
+        float dot = Vector3.Dot(posOnRod.normalized, transform.right);
+        //float dot = Vector3.Dot(posOnRod.normalized, transform.up);
         return dot > 0.9f ? CutSide.Right : CutSide.Left;
     }
     private void ScaleRod(GameObject rod, float length)
     {
         Vector3 localScale = this.transform.localScale;
-        rod.transform.localScale = new Vector3(localScale.x,length/2f,localScale.z);
+        rod.transform.localScale = new Vector3(length/2f,localScale.y,localScale.z);
+        //rod.transform.localScale = new Vector3(localScale.x,length/2f,localScale.z);
     }
     private Vector3 GetCutDirection(CutSide side)
     {
-        return side == CutSide.Right ? this.transform.up : -this.transform.up; 
+        return side == CutSide.Right ? this.transform.right : -this.transform.right; 
+        //return side == CutSide.Right ? this.transform.up : -this.transform.up; 
     }
 
     private void OnDestroy()

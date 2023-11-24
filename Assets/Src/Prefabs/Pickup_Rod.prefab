@@ -92,8 +92,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8803497258874234894}
-  - component: {fileID: 8803497258874234892}
   - component: {fileID: 7769467590714522444}
+  - component: {fileID: 8803497258874234892}
   - component: {fileID: 1406267360505047819}
   m_Layer: 0
   m_Name: Pickup_Rod
@@ -118,19 +118,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &8803497258874234892
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8803497258874234889}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!114 &7769467590714522444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,6 +134,20 @@ MonoBehaviour:
   - Player
   sizeToAdd: 0.6
   vfxPickup: {fileID: 2079096086071143462, guid: 562ff5034205d2245a1e0f0fc1bb08dd, type: 3}
+  _teamColorElement: {fileID: 1406267360505047819}
+--- !u!135 &8803497258874234892
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8803497258874234889}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!114 &1406267360505047819
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -240,6 +240,7 @@ GameObject:
   - component: {fileID: 6753653156077627987}
   - component: {fileID: 1977974474592478013}
   - component: {fileID: 1353850135}
+  - component: {fileID: 8929311791118886028}
   m_Layer: 0
   m_Name: Saw
   m_TagString: Untagged
@@ -295,3 +296,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &8929311791118886028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8875046798021297314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd9a874e8b8f21141acfdbcdb8b4e92c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bumpForce: 10

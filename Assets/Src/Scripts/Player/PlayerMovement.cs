@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _normalSpeed;
     [SerializeField] private float xMin;
     [SerializeField] private float xMax;
+    [SerializeField] private CapsuleCollider _capsule;
 
     private Rigidbody rigid => _rigid ??= GetComponent<Rigidbody>();
     private float _horizontalMoveAccumulated = 0;
@@ -33,6 +34,13 @@ public class PlayerMovement : MonoBehaviour
         Application.targetFrameRate = -1;
     }
 
+    private Vector3 bumpVector;
+    public void Bump(Vector3 direction, float force)
+    {
+        bumpVector += direction * force;
+    }
+    
+    
     private void Awake()
     {
         LeanTouch.OnGesture += ManageInputs;
@@ -81,7 +89,6 @@ public class PlayerMovement : MonoBehaviour
         if (finger.IsActive && !finger.StartedOverGui)
         {
             _horizontalMoveAccumulated += (finger.ScreenDelta.x / Screen.width) * _sensivity;
-            //_horizontalMoveAccumulated += finger.ScaledDelta.x * _sensivity;
         }
     }
 
@@ -92,10 +99,12 @@ public class PlayerMovement : MonoBehaviour
         tempVelocity.z = _currentSpeed * Time.fixedDeltaTime;
 
         // Horizontaly
-        tempVelocity.x = _horizontalMoveAccumulated; // Sensi = 0.09f
-        //tempVelocity.x = _horizontalMoveAccumulated * Time.fixedDeltaTime; // Sensi = 5
+        tempVelocity.x = _horizontalMoveAccumulated;
         _horizontalMoveAccumulated = 0;
 
+        tempVelocity += bumpVector;
+        bumpVector = Vector3.zero;
+        
         return tempVelocity;
     }
 

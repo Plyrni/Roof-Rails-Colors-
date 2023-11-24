@@ -41,14 +41,16 @@ public class PlayerRodPositionner : MonoBehaviour
     {
         if (_isCentering)
         {
+            Debug.LogWarning("[PlayerRodPositionner] Centering...");
             Vector3 currentLocalPos = _rod.transform.localPosition;
             float blend = Mathf.Pow(0.5f, Time.fixedDeltaTime * _lerpSpeed);
             float newLocalX = Mathf.Lerp(currentLocalPos.x, 0, blend);
 
-            if ((currentLocalPos.x < 0 && newLocalX > -0.01f) || (currentLocalPos.x > 0 && newLocalX < 0.01f))
+            if ((currentLocalPos.x <= 0 && newLocalX > -0.01f) || (currentLocalPos.x > 0 && newLocalX < 0.01f))
             {
                 _isCentering = false;
                 newLocalX = 0f;
+                Debug.LogWarning("[PlayerRodPositionner] Stop centering");
             }
             
             Vector3 newRodLocalPos = currentLocalPos;
@@ -90,6 +92,7 @@ public class PlayerRodPositionner : MonoBehaviour
         if (_isTimerRunning == false)
         {
             _timeSinceCut = 0;
+            Debug.LogWarning("[PlayerRodPositionner] Start counter ");
         }
     }
 
