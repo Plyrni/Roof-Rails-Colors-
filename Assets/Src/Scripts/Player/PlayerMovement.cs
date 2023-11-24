@@ -88,7 +88,6 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 ComputeMoveVelocity()
     {
         Vector3 tempVelocity = rigid.velocity;
-        Debug.Log("[Movement]Frame" + Time.frameCount + " _horizontalMove = " + _horizontalMoveAccumulated);
         // Forward
         tempVelocity.z = _currentSpeed * Time.fixedDeltaTime;
 

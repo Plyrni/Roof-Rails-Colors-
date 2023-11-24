@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 8803497258874234894}
   - component: {fileID: 8803497258874234892}
   - component: {fileID: 7769467590714522444}
+  - component: {fileID: 1406267360505047819}
   m_Layer: 0
   m_Name: Pickup_Rod
   m_TagString: Untagged
@@ -146,6 +147,21 @@ MonoBehaviour:
   - Player
   sizeToAdd: 0.6
   vfxPickup: {fileID: 2079096086071143462, guid: 562ff5034205d2245a1e0f0fc1bb08dd, type: 3}
+--- !u!114 &1406267360505047819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8803497258874234889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa292def674b9634b90b7041f5bc5ddb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _team: 0
+  renderersToColorize:
+  - {fileID: 8803497258600114429}
 --- !u!1 &8803497259653699298
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,6 +19,7 @@ public class Game : MonoBehaviour
     [SerializeField] private Player _player;
     [SerializeField] private MapManager _mapManager;
     [SerializeField] private DataManager _dataManager;
+    [SerializeField] private TeamColorManager _teamColorManager;
     private GameState _state;
 
     private void Awake()
@@ -55,6 +56,7 @@ public class Game : MonoBehaviour
                 Debug.LogError("How are you even here ?");
                 break;
             case GameState.Home:
+                Player.TeamColorManager.SetTeamColor(TeamColor.Yellow);
                 instance._mapManager.SpawnLevel(DataManager.GetLevel());
                 Player.Reset();
                 break;
@@ -87,5 +89,6 @@ public class Game : MonoBehaviour
     private void OnDestroy()
     {
         LeanTouch.OnGesture -= ManageInputs;
+        OnChangeState.RemoveAllListeners();
     }
 }

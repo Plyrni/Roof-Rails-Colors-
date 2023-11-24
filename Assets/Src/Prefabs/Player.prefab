@@ -190,6 +190,7 @@ GameObject:
   - component: {fileID: 749373205411881100}
   - component: {fileID: 2662390945564300780}
   - component: {fileID: 749373205411881102}
+  - component: {fileID: 1050475856}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -226,7 +227,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5e36df3d5079d744afe9fb96ee0525d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensivity: 0.09
   _baseRodeSize: 2
   _rod: {fileID: 1804148545}
 --- !u!114 &749373205411881100
@@ -244,7 +244,7 @@ MonoBehaviour:
   onGroundedStateChange:
     m_PersistentCalls:
       m_Calls: []
-  _sensivity: 5
+  _sensivity: 500
   _normalSpeed: 500
   xMin: -3.65
   xMax: 3.65
@@ -273,9 +273,24 @@ Rigidbody:
   m_AngularDrag: 0.5
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!114 &1050475856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749373205411881088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa292def674b9634b90b7041f5bc5ddb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _team: 0
+  renderersToColorize:
+  - {fileID: 749373205119132296}
 --- !u!1 &749373205506826733
 GameObject:
   m_ObjectHideFlags: 0
