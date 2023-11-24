@@ -303,11 +303,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 41395269}
   m_CullTransparentMesh: 1
---- !u!1 &65284393 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 749373205411881088, guid: 8abc43732b5d371479c9d03120985192, type: 3}
-  m_PrefabInstance: {fileID: 749373205480439223}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &69082424 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 749373205411881103, guid: 8abc43732b5d371479c9d03120985192, type: 3}
@@ -1198,27 +1193,12 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 749373205411881101, guid: 8abc43732b5d371479c9d03120985192, type: 3}
   m_PrefabInstance: {fileID: 749373205480439223}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 65284393}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5e36df3d5079d744afe9fb96ee0525d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1050475857
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 65284393}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c8fdf151a062bf4db2bb3108fec7ad7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onCurrentTeamColorChange:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1161549074
 GameObject:
   m_ObjectHideFlags: 0

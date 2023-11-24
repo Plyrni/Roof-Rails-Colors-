@@ -11,15 +11,15 @@ public class Player : MonoBehaviour
     public TeamColorManager TeamColorManager => _teamColorManager ??= GetComponent<TeamColorManager>();
     
     // -- Protected
-    protected TeamColorElement teamColorElement => _teamColorElement ??= GetComponent<TeamColorElement>();
+    protected TeamColorElement teamColorElement => _teamColorElement;
     
     // -- Privates
     [SerializeField] private float _baseRodeSize;
     [SerializeField] private RodCutable _rod;
+    [SerializeField]private TeamColorElement _teamColorElement;
     private PlayerMovement _movement;
     private Rigidbody _rigidbody;
     private PlayerRailSliding _railSliding;
-    private TeamColorElement _teamColorElement;
     private TeamColorManager _teamColorManager;
 
     private void Awake()
