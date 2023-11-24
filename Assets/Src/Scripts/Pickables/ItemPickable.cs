@@ -8,7 +8,6 @@ public class ItemPickable : MonoBehaviour
     [TagField]
     [SerializeField] private List<string> tagsAccepted;
 
-
     protected virtual void OnTriggerEnter(Collider other)
     {
         if (tagsAccepted.Any(str => other.CompareTag(str)))

@@ -13,13 +13,14 @@ public class Game : MonoBehaviour
     public static GameState State => Instance._state;
     public static DataManager DataManager => Instance._dataManager;
     public static Scene Map => instance._mapManager.CurrentScene;
+    public static Transform MapTransform => Map.GetRootGameObjects()[0].transform;
     public static readonly UnityEvent<GameState> OnChangeState = new UnityEvent<GameState>();
 
     private static Game instance;
     [SerializeField] private Player _player;
     [SerializeField] private MapManager _mapManager;
     [SerializeField] private DataManager _dataManager;
-    [SerializeField] private TeamColorManager _teamColorManager;
+    private TeamColorManager _teamColorManager;
     private GameState _state;
 
     private void Awake()

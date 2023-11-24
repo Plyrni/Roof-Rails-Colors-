@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bumper : MonoBehaviour
+public class Pusher : MonoBehaviour
 {
     [SerializeField] private float bumpForce = 10;
     
@@ -12,7 +12,7 @@ public class Bumper : MonoBehaviour
     private void BumpPlayer(Player player, Collision collision)
     {
         Vector3 bumpDir = collision.GetContact(0).normal;
-        player.MovementComponent.Bump(bumpDir, 10);
+        player.MovementComponent.Bump(bumpDir, bumpForce);
     }
     
     private void OnCollisionEnter(Collision other)

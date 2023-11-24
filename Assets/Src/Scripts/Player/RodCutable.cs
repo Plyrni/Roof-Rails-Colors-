@@ -47,7 +47,7 @@ public class RodCutable : MonoBehaviour
 
     private GameObject GenerateFakeRod(Vector3 cutLocalPos,CutSide side,float length)
     {
-        Transform parent = Game.Map.GetRootGameObjects()[0].transform;
+        Transform parent = Game.MapTransform;
         GameObject fakeRod = Instantiate(prefabRod2m,parent);
         ScaleRod(fakeRod, length);
         

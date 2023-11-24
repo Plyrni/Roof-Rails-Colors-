@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8778778186297236869}
   - component: {fileID: 6072539950877332814}
   - component: {fileID: 4747482787857234857}
+  - component: {fileID: 294113868712678922}
   m_Layer: 8
   m_Name: 2mBlade
   m_TagString: Untagged
@@ -63,6 +64,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &294113868712678922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8778778186297236865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa292def674b9634b90b7041f5bc5ddb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _team: 0
+  renderersToColorize:
+  - {fileID: 4271266441046666018}
 --- !u!1001 &3208537191517042598
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -140,7 +156,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2325663091851627255}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 0b1a31740e5be9e499a90168f8f26c9e, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
@@ -150,5 +166,10 @@ MeshCollider:
 --- !u!4 &3102341249755893837 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5b1c17043b0c9a84095b43ea7d33f707, type: 3}
+  m_PrefabInstance: {fileID: 3208537191517042598}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &4271266441046666018 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 5b1c17043b0c9a84095b43ea7d33f707, type: 3}
   m_PrefabInstance: {fileID: 3208537191517042598}
   m_PrefabAsset: {fileID: 0}
