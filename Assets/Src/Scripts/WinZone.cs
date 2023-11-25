@@ -10,7 +10,7 @@ public class WinZone : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Game.ChangeState(GameStateEnum.Win);
+            Game.StateMachine.ChangeState(GameStateEnum.Win);
         }
     }
 }

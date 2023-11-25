@@ -7,6 +7,7 @@ public class StateWin : GameState
     public override void OnEnter()
     {
         base.OnEnter();
+        Game.DataManager.IncrementLevel();
     }
     public override void OnUpdate(float deltaTime)
     {

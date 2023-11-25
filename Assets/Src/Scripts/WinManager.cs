@@ -7,7 +7,7 @@ public class WinManager : MonoBehaviour
 {
     private void Awake()
     {
-        Game.OnChangeState.AddListener(OnChangeState);        
+        Game.StateMachine.OnStateChanged.AddListener(OnChangeState);        
     }
 
     private void OnChangeState(GameStateEnum newStateEnum)

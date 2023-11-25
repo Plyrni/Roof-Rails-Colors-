@@ -16,7 +16,7 @@ public class MenuWin : MonoBehaviour
 
     private void OnClickBtnNext()
     {
-        Game.ChangeState(GameStateEnum.Home);
+        Game.StateMachine.ChangeState(GameStateEnum.Home);
     }
 
     private void OnDestroy()

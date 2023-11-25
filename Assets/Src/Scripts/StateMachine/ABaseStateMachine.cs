@@ -5,9 +5,9 @@ using UnityEngine;
 
 public abstract class ABaseStateMachine<T, E> : MonoBehaviour, IStateMachine<T> where T : IState where E : Enum
 {
-    public T CurrentState { get => this._currentState; set => SetState(value); }
+    public T CurrentState { get => this._currentState; set => ChangeState(value); }
     private T _currentState;
-    public E CurrentStateEnum { get => _currentStateEnum; set => SetState(value); }
+    public E CurrentStateEnum { get => _currentStateEnum; set => ChangeState(value); }
     private E _currentStateEnum;
 
     private void Update()
@@ -15,7 +15,7 @@ public abstract class ABaseStateMachine<T, E> : MonoBehaviour, IStateMachine<T> 
         this.CurrentState?.OnUpdate(Time.deltaTime);
     }
 
-    public virtual void SetState(T state)
+    public virtual void ChangeState(T state)
     {
         if (state == null) { Debug.LogError("Null state passed in " + this.GetType().Name); return; }
 
@@ -27,9 +27,10 @@ public abstract class ABaseStateMachine<T, E> : MonoBehaviour, IStateMachine<T> 
         this._currentState = state;
         this._currentState.OnEnter();
     }
-    public virtual void SetState(E stateEnum)
+    public virtual void ChangeState(E stateEnum)
     {
-        this.SetState(GetState(stateEnum));
+        _currentStateEnum = stateEnum;
+        this.ChangeState(GetState(stateEnum));
     }
 
     protected abstract T GetState(E stateEnum);

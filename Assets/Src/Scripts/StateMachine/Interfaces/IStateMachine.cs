@@ -6,5 +6,5 @@ public interface IStateMachine<StateType> where StateType : IState
 {
     StateType CurrentState { get; set; }
 
-    public void SetState(StateType state);
+    public void ChangeState(StateType state);
 }

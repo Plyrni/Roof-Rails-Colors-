@@ -12,9 +12,9 @@ public class UIManager : MonoBehaviour
 
     private GameObject _currentMenu;
 
-    private void Awake()
+    private void Start()
     {
-        Game.OnChangeState.AddListener(OnChangeState);
+        Game.StateMachine.OnStateChanged.AddListener(OnChangeState);
     }
 
     private void OnChangeState(GameStateEnum newStateEnum)
@@ -46,6 +46,6 @@ public class UIManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        Game.OnChangeState.RemoveListener(OnChangeState);
+        Game.StateMachine.OnStateChanged.RemoveListener(OnChangeState);
     }
 }

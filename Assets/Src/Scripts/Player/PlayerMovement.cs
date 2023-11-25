@@ -68,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         LeanTouch.OnGesture += ManageInputs;
-        Game.OnChangeState.AddListener(OnChangeState);
+        Game.StateMachine.OnStateChanged.AddListener(OnChangeState);
 
         _currentSpeed = _normalSpeed;
     }
@@ -86,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Game.StateEnum != GameStateEnum.Playing)
+        if (Game.State != GameStateEnum.Playing)
         {
             return;
         }
@@ -196,6 +196,6 @@ public class PlayerMovement : MonoBehaviour
     private void OnDestroy()
     {
         onGroundedStateChange.RemoveAllListeners();
-        Game.OnChangeState.RemoveListener(OnChangeState);
+        Game.StateMachine.OnStateChanged.RemoveListener(OnChangeState);
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using AYellowpaper.SerializedCollections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -11,12 +12,7 @@ public class GameStateMachine : ABaseStateMachine<GameState, GameStateEnum>
     [SerializeReference] private GameState stateWin;
     [SerializeReference] private GameState stateLose;
 
-    [HideInInspector] public UnityEvent<GameStateEnum> OnGameStateChanged;
-
-    private void Awake()
-    {
-        this.SetState(GameStateEnum.Home);
-    }
+    [HideInInspector] public UnityEvent<GameStateEnum> OnStateChanged;
 
     private void LateUpdate()
     {
@@ -48,15 +44,21 @@ public class GameStateMachine : ABaseStateMachine<GameState, GameStateEnum>
 
         if (tempState == null)
         {
-            Debug.LogError("[GameStateMachine] State not found");
+            Debug.LogError("[GameStateMachine] State not found : " + stateEnum);
         }
 
         return tempState;
     }
 
-    public override void SetState(GameState state)
+    public override void ChangeState(GameState state)
     {
-        base.SetState(state);
-        this.OnGameStateChanged?.Invoke(this.CurrentStateEnum);
+        base.ChangeState(state);
+        Debug.Log("[GameStateMachine] New GameState : " + CurrentStateEnum);
+        this.OnStateChanged?.Invoke(this.CurrentStateEnum);
+    }
+
+    private void OnDestroy()
+    {
+        OnStateChanged.RemoveAllListeners();
     }
 }

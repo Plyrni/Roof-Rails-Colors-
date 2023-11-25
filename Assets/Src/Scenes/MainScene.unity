@@ -1372,6 +1372,7 @@ MonoBehaviour:
   _player: {fileID: 1050475852}
   _mapManager: {fileID: 1927125562}
   _dataManager: {fileID: 1714029698}
+  _stateMachine: {fileID: 1199564261}
 --- !u!114 &1199564260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1397,21 +1398,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stateHome:
-    rid: -2
+    rid: 7555439862223470626
   statePlaying:
-    rid: -2
+    rid: 7555439862223470627
   stateWin:
-    rid: -2
+    rid: 7555439862223470628
   stateLose:
-    rid: -2
-  OnGameStateChanged:
+    rid: 7555439862223470629
+  OnStateChanged:
     m_PersistentCalls:
       m_Calls: []
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 7555439862223470626
+      type: {class: StateHome, ns: , asm: Assembly-CSharp}
+    - rid: 7555439862223470627
+      type: {class: StatePlaying, ns: , asm: Assembly-CSharp}
+    - rid: 7555439862223470628
+      type: {class: StateWin, ns: , asm: Assembly-CSharp}
+    - rid: 7555439862223470629
+      type: {class: StateLose, ns: , asm: Assembly-CSharp}
 --- !u!1 &1280428917
 GameObject:
   m_ObjectHideFlags: 3

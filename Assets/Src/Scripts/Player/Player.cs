@@ -59,7 +59,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        Game.OnChangeState.AddListener(OnChangeState);
+        Game.StateMachine.OnStateChanged.AddListener(OnChangeState);
         Game.Player.TeamColorManager.onCurrentTeamColorChange.AddListener(OnTeamColorChange);
         Reset();
     }
@@ -79,7 +79,7 @@ public class Player : MonoBehaviour
 
     private void OnDestroy()
     {
-        Game.OnChangeState.RemoveListener(OnChangeState);
+        Game.StateMachine.OnStateChanged.RemoveListener(OnChangeState);
         if (TeamColorManager != null)
             TeamColorManager.onCurrentTeamColorChange.RemoveListener(OnTeamColorChange);
     }

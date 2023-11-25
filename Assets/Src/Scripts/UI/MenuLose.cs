@@ -15,7 +15,7 @@ public class MenuLose : MonoBehaviour
 
     private void OnClickBtnRetry()
     {
-        Game.ChangeState(GameStateEnum.Home);
+        Game.StateMachine.ChangeState(GameStateEnum.Home);
     }
 
     private void OnDestroy()
