@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
 
         Application.targetFrameRate = -1;
     }
-    
+
     /// <summary></summary>
     /// <param name="direction">Is normalized internaly</param>
     /// <param name="force"></param>
@@ -45,12 +45,19 @@ public class PlayerMovement : MonoBehaviour
         _bumpVector += direction.normalized * force;
     }
 
+    public void SetMovementBounds(float minX, float maxX)
+    {
+        this.xMin = minX;
+        this.xMax = maxX;
+    }
+
     public void DisableInputs(float duration)
     {
         if (duration < _durationNoInputRemaining)
         {
             return;
         }
+
         _durationNoInputRemaining = duration;
     }
 
@@ -72,13 +79,14 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-    
+
     private void FixedUpdate()
     {
         if (Game.State != GameState.Playing)
         {
             return;
         }
+
         UpdateTimerDisabledInput();
         UpdateIsGrounded();
 
@@ -93,7 +101,10 @@ public class PlayerMovement : MonoBehaviour
         // Apply velocity
         rigid.velocity = velocity;
 
-        ClampPlayerPos();
+        if (_isGrounded)
+        {
+            ClampPlayerPos();
+        }
     }
 
     private void ManageInputs(List<LeanFinger> fingers)
@@ -108,15 +119,17 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 ComputeMoveVelocity()
     {
         Vector3 tempVelocity = rigid.velocity;
-        
+
         // Forward
         tempVelocity.z = _currentSpeed * Time.fixedDeltaTime;
 
         // Horizontal player input
         if (_isUserInputEnabled)
         {
-            tempVelocity.x = _horizontalMoveAccumulated; // Override velocity X with swipe input. Nice responsive movement.
+            tempVelocity.x =
+                _horizontalMoveAccumulated; // Override velocity X with swipe input. Nice responsive movement.
         }
+
         _horizontalMoveAccumulated = 0;
 
         // Apply potential bump
@@ -165,6 +178,7 @@ public class PlayerMovement : MonoBehaviour
             _durationNoInputRemaining -= Time.fixedDeltaTime;
         }
     }
+
     private Rigidbody GetRigidBody()
     {
         if (_rigid == null)
