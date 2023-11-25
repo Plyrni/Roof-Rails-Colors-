@@ -17,7 +17,7 @@ RenderSettings:
   m_Fog: 1
   m_FogColor: {r: 0.23375754, g: 0.45794222, b: 0.9716981, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.01
+  m_FogDensity: 0.0025
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.745283, g: 0.745283, b: 0.745283, a: 1}
@@ -1331,6 +1331,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1199564258}
   - component: {fileID: 1199564259}
+  - component: {fileID: 1199564260}
+  - component: {fileID: 1199564261}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -1370,6 +1372,46 @@ MonoBehaviour:
   _player: {fileID: 1050475852}
   _mapManager: {fileID: 1927125562}
   _dataManager: {fileID: 1714029698}
+--- !u!114 &1199564260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1199564257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8259c53f8670cee45b10fc46a52ca35a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1199564261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1199564257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2544222c9212cea42a84e699587f17cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stateHome:
+    rid: -2
+  statePlaying:
+    rid: -2
+  stateWin:
+    rid: -2
+  stateLose:
+    rid: -2
+  OnGameStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!1 &1280428917
 GameObject:
   m_ObjectHideFlags: 3

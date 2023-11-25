@@ -8,7 +8,7 @@ public class LoseZone : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Game.ChangeState(GameState.Lose);
+            Game.ChangeState(GameStateEnum.Lose);
         }
     }
 }

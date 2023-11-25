@@ -8,7 +8,7 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     [SerializedDictionary("State", "Menu")]
-    [SerializeField]private SerializedDictionary<GameState, GameObject> menuByState;
+    [SerializeField]private SerializedDictionary<GameStateEnum, GameObject> menuByState;
 
     private GameObject _currentMenu;
 
@@ -17,27 +17,27 @@ public class UIManager : MonoBehaviour
         Game.OnChangeState.AddListener(OnChangeState);
     }
 
-    private void OnChangeState(GameState newState)
+    private void OnChangeState(GameStateEnum newStateEnum)
     {
-        OpenStateMenu(newState);
+        OpenStateMenu(newStateEnum);
     }
 
-    private void OpenStateMenu(GameState state)
+    private void OpenStateMenu(GameStateEnum stateEnum)
     {
         GameObject menuToOpen = null;
-        if (menuByState.TryGetValue(state, out menuToOpen))
+        if (menuByState.TryGetValue(stateEnum, out menuToOpen))
         {
-            HideAllMenuExcept(state);
+            HideAllMenuExcept(stateEnum);
             menuToOpen.SetActive(true);
             _currentMenu = menuToOpen;
         }     
     }
 
-    private void HideAllMenuExcept(GameState stateException)
+    private void HideAllMenuExcept(GameStateEnum stateEnumException)
     {
         foreach (var pair in menuByState)
         {
-            if (pair.Key != stateException)
+            if (pair.Key != stateEnumException)
             {
                 pair.Value.SetActive(false);
             }

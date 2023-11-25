@@ -10,65 +10,66 @@ public class Game : MonoBehaviour
 {
     public static Game Instance => instance;
     public static Player Player => Instance._player;
-    public static GameState State => Instance._state;
+    public static GameStateEnum StateEnum => Instance.stateEnum;
     public static DataManager DataManager => Instance._dataManager;
     public static Scene Map => instance._mapManager.CurrentScene;
     public static Transform MapTransform => Map.GetRootGameObjects()[0].transform;
-    public static readonly UnityEvent<GameState> OnChangeState = new UnityEvent<GameState>();
+    public static readonly UnityEvent<GameStateEnum> OnChangeState = new UnityEvent<GameStateEnum>();
 
     private static Game instance;
     [SerializeField] private Player _player;
     [SerializeField] private MapManager _mapManager;
     [SerializeField] private DataManager _dataManager;
     private TeamColorManager _teamColorManager;
-    private GameState _state;
-
+    private WinManager _winManager; // Should later be replaced by a stateMachine
+    private GameStateEnum stateEnum;
+    
     private void Awake()
     {
         instance = this;
-        ChangeState(GameState.Home);
+        ChangeState(GameStateEnum.Home);
         LeanTouch.OnGesture += ManageInputs;
 
         Application.targetFrameRate =-1;
     }
 
-    public static void ChangeState(GameState newState)
+    public static void ChangeState(GameStateEnum newStateEnum)
     {
-        if (newState == State)
+        if (newStateEnum == StateEnum)
         {
             return;
         }
 
-        instance._state = newState;
-        _OnChangeState(State);
-        Debug.Log("[Game] New GameState : " + State);
-        OnChangeState?.Invoke(newState);
+        instance.stateEnum = newStateEnum;
+        _OnChangeState(StateEnum);
+        Debug.Log("[Game] New GameState : " + StateEnum);
+        OnChangeState?.Invoke(newStateEnum);
     }
 
     /// <summary>
     /// Do whatever needs to be done, but do it before the event is called.
     /// </summary>
-    /// <param name="newState"></param>
+    /// <param name="newStateEnum"></param>
     /// <exception cref="ArgumentOutOfRangeException">Switch needs maintenance</exception>
-    private static void _OnChangeState(GameState newState)
+    private static void _OnChangeState(GameStateEnum newStateEnum)
     {
         // TODO : StateMachine
-        switch (newState)
+        switch (newStateEnum)
         {
-            case GameState.NONE:
+            case GameStateEnum.NONE:
                 Debug.LogError("How are you even here ?");
                 break;
-            case GameState.Home:
+            case GameStateEnum.Home:
                 Player.TeamColorManager.SetTeamColor(TeamColor.Yellow);
                 instance._mapManager.SpawnLevel(DataManager.GetLevel());
                 Player.Reset();
                 break;
-            case GameState.Playing:
+            case GameStateEnum.Playing:
                 break;
-            case GameState.Win:
+            case GameStateEnum.Win:
                 DataManager.IncrementLevel();
                 break;
-            case GameState.Lose:
+            case GameStateEnum.Lose:
                 break;
         }
     }
@@ -78,12 +79,12 @@ public class Game : MonoBehaviour
         LeanFinger finger = fingers[0];
         
         // TODO : StateMachine
-        switch (State)
+        switch (StateEnum)
         {
-            case GameState.Home:
+            case GameStateEnum.Home:
                 if (finger.IsActive && !finger.StartedOverGui && finger.Down)
                 {
-                    ChangeState(GameState.Playing);
+                    ChangeState(GameStateEnum.Playing);
                 }
                 break;
         }

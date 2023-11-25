@@ -33,7 +33,7 @@ public class PlayerRailSliding : MonoBehaviour
                 }
                 else
                 {
-                    Game.ChangeState(GameState.Lose);
+                    Game.ChangeState(GameStateEnum.Lose);
                 }
             }
         }
@@ -41,7 +41,7 @@ public class PlayerRailSliding : MonoBehaviour
 
     private void OnMasterRodEnterRail()
     {
-        if (Game.State == GameState.Playing)
+        if (Game.StateEnum == GameStateEnum.Playing)
         {
             nbRailEntered += 1;
         }
@@ -49,7 +49,7 @@ public class PlayerRailSliding : MonoBehaviour
 
     private void OnMasterRodExitRail()
     {
-        if (Game.State == GameState.Playing)
+        if (Game.StateEnum == GameStateEnum.Playing)
         {
             nbRailEntered -= 1;
         }

@@ -73,9 +73,9 @@ public class PlayerMovement : MonoBehaviour
         _currentSpeed = _normalSpeed;
     }
 
-    private void OnChangeState(GameState newState)
+    private void OnChangeState(GameStateEnum newStateEnum)
     {
-        if (newState != GameState.Playing)
+        if (newStateEnum != GameStateEnum.Playing)
         {
             if (_isGrounded)
             {
@@ -86,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Game.State != GameState.Playing)
+        if (Game.StateEnum != GameStateEnum.Playing)
         {
             return;
         }

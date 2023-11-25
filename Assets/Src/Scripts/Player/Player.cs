@@ -64,9 +64,9 @@ public class Player : MonoBehaviour
         Reset();
     }
 
-    private void OnChangeState(GameState newState)
+    private void OnChangeState(GameStateEnum newStateEnum)
     {
-        if (newState == GameState.Lose)
+        if (newStateEnum == GameStateEnum.Lose)
         {
             Kill();
         }
