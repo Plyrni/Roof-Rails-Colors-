@@ -24,7 +24,8 @@ public class TeamColorElement : MonoBehaviour
     {
         foreach (var renderer in renderersToColorize)
         {
-            renderer.material = SO_TeamColorData.GetTeamMaterial(_team);
+            Material newMat = new Material(Game.DataManager.TeamColorData.GetTeamMaterial(_team));
+            renderer.material = newMat;
         }
     }
 }

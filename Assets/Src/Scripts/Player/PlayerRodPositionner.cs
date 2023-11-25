@@ -9,20 +9,19 @@ public class PlayerRodPositionner : MonoBehaviour
     private bool _isCentering;
     private bool _isTimerRunning => _timeSinceCut < _waitTimeToCenterRod;
     private Player _playerOwner;
-    private RodCutable _rod;
+    private ScaleCutable scale;
 
     private void Awake()
     {
         _playerOwner = GetComponentInParent<Player>();
-        _rod = GetComponent<RodCutable>();
+        scale = GetComponent<ScaleCutable>();
         _timeSinceCut = Mathf.Infinity;
-
     }
 
     private void Start()
     {
         _playerOwner.MovementComponent.onGroundedStateChange.AddListener(OnPlayerGroundStateChange);
-        _rod.onCut.AddListener(OnPlayerRodCut);
+        scale.onCut.AddListener(OnPlayerRodCut);
     }
 
     private void Update()
@@ -41,7 +40,7 @@ public class PlayerRodPositionner : MonoBehaviour
     {
         if (_isCentering)
         {
-            Vector3 currentLocalPos = _rod.transform.localPosition;
+            Vector3 currentLocalPos = scale.transform.localPosition;
             float blend = Mathf.Pow(0.5f, Time.fixedDeltaTime * _lerpSpeed);
             float newLocalX = Mathf.Lerp(currentLocalPos.x, 0, blend);
 
@@ -51,11 +50,11 @@ public class PlayerRodPositionner : MonoBehaviour
                 _timeSinceCut = _waitTimeToCenterRod;
                 newLocalX = 0f;
             }
-            
+
             Vector3 newRodLocalPos = currentLocalPos;
             newRodLocalPos.x = newLocalX;
-            
-            _rod.transform.localPosition = newRodLocalPos;
+
+            scale.transform.localPosition = newRodLocalPos;
         }
     }
 
@@ -95,7 +94,9 @@ public class PlayerRodPositionner : MonoBehaviour
 
     private void OnDestroy()
     {
-        _playerOwner.MovementComponent.onGroundedStateChange.RemoveListener(OnPlayerGroundStateChange);
-        _rod.onCut.RemoveListener(OnPlayerRodCut);
+        if (_playerOwner != null)
+            _playerOwner.MovementComponent.onGroundedStateChange.RemoveListener(OnPlayerGroundStateChange);
+
+        scale.onCut.RemoveListener(OnPlayerRodCut);
     }
 }

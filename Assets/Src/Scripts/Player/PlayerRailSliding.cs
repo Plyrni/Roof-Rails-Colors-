@@ -27,7 +27,14 @@ public class PlayerRailSliding : MonoBehaviour
         {
             if (nbRailEntered == 1)
             {
-                Game.ChangeState(GameState.Lose);
+                if (_player.Region == GameRegion.FinalZone)
+                {
+                    _player.Kill();
+                }
+                else
+                {
+                    Game.ChangeState(GameState.Lose);
+                }
             }
         }
     }

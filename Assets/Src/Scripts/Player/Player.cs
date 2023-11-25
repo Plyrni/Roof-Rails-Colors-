@@ -1,26 +1,61 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
     // -- Public
     public PlayerMovement MovementComponent => _movement ??= GetComponent<PlayerMovement>();
-    public RodCutable Rod => _rod;
+    public ScaleCutable Blade => blade;
     public Rigidbody Rigidbody => _rigidbody ??= GetComponent<Rigidbody>();
     public PlayerRailSliding RailSliding => _railSliding ??= GetComponent<PlayerRailSliding>();
     public TeamColorManager TeamColorManager => _teamColorManager ??= GetComponent<TeamColorManager>();
-    
+    public GameRegion Region => _currentRegion;
+
     // -- Protected
     protected TeamColorElement teamColorElement => _teamColorElement;
-    
+
     // -- Privates
     [SerializeField] private float _baseRodeSize;
-    [SerializeField] private RodCutable _rod;
-    [SerializeField]private TeamColorElement _teamColorElement;
+    [SerializeField] private ScaleCutable blade;
+    [SerializeField] private TeamColorElement _teamColorElement;
     private PlayerMovement _movement;
     private Rigidbody _rigidbody;
     private PlayerRailSliding _railSliding;
     private TeamColorManager _teamColorManager;
+    private GameRegion _currentRegion;
+
+
+    public void Reset()
+    {
+        Rigidbody.MovePosition(Vector3.zero + Vector3.up * 0.05f);
+        Rigidbody.MoveRotation(Quaternion.identity);
+        MovementComponent.Reset();
+        RailSliding.Reset();
+        blade.gameObject.SetActive(true);
+        blade.SetSize(_baseRodeSize);
+        SetRegion(GameRegion.NONE);
+    }
+
+    public void Kill()
+    {
+        Rigidbody.constraints = RigidbodyConstraints.None;
+
+        GameObject bladeCopy = Instantiate(blade.gameObject, blade.transform.position, blade.transform.rotation,
+            Game.MapTransform);
+        bladeCopy.AddComponent<Rigidbody>();
+        bladeCopy.GetComponent<PlayerRodPositionner>().enabled = false;
+
+        blade.gameObject.SetActive(false);
+
+        MovementComponent.DisableInputs(Mathf.Infinity);
+    }
+
+    public void SetRegion(GameRegion newRegion)
+    {
+        _currentRegion = newRegion;
+    }
+
 
     private void Awake()
     {
@@ -29,20 +64,11 @@ public class Player : MonoBehaviour
         Reset();
     }
 
-    public void Reset()
-    {
-        Rigidbody.MovePosition(Vector3.zero + Vector3.up * 0.01f);
-        Rigidbody.MoveRotation(Quaternion.identity);
-        MovementComponent.Reset();
-        RailSliding.Reset();
-        _rod.SetSize(_baseRodeSize);
-    }
-
     private void OnChangeState(GameState newState)
     {
         if (newState == GameState.Lose)
         {
-            Rigidbody.constraints = RigidbodyConstraints.None;
+            Kill();
         }
     }
 

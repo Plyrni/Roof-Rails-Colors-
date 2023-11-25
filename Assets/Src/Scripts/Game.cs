@@ -28,6 +28,8 @@ public class Game : MonoBehaviour
         instance = this;
         ChangeState(GameState.Home);
         LeanTouch.OnGesture += ManageInputs;
+
+        Application.targetFrameRate =-1;
     }
 
     public static void ChangeState(GameState newState)
@@ -79,7 +81,7 @@ public class Game : MonoBehaviour
         switch (State)
         {
             case GameState.Home:
-                if (finger.IsActive && !finger.StartedOverGui)
+                if (finger.IsActive && !finger.StartedOverGui && finger.Down)
                 {
                     ChangeState(GameState.Playing);
                 }

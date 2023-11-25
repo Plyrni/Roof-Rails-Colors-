@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using EzySlice;
 using UnityEngine;
 
@@ -35,8 +36,12 @@ public class Slicer : MonoBehaviour
         }
     }
 
+    private static int debug_nbSlicePartGenerated = 0;
+    
     private void SetupSlicedPart(GameObject slicedPart, Vector3 bladeDirection)
     {
+        debug_nbSlicePartGenerated++;
+        slicedPart.name += debug_nbSlicePartGenerated;
         slicedPart.transform.parent = Game.MapTransform;
         slicedPart.layer = LayerMask.NameToLayer("SlicedPart");
         

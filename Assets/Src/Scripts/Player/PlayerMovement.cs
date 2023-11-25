@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
         rigid.velocity = Vector3.zero;
         rigid.constraints = RigidbodyConstraints.FreezeRotation;
         _horizontalMoveAccumulated = 0f;
-
+        EnableInputs();
         Application.targetFrameRate = -1;
     }
 
@@ -51,6 +51,10 @@ public class PlayerMovement : MonoBehaviour
         this.xMax = maxX;
     }
 
+    public void EnableInputs()
+    {
+        _durationNoInputRemaining = 0;
+    }
     public void DisableInputs(float duration)
     {
         if (duration < _durationNoInputRemaining)

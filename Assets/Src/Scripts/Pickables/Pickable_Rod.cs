@@ -20,7 +20,7 @@ public class Pickable_Rod : ItemPickable
 
     protected override void OnValidColliderDetected(Collider other)
     {
-        Game.Player.Rod.AddSize(sizeToAdd);
+        Game.Player.Blade.AddSize(sizeToAdd);
 
         Instantiate(vfxPickup, this.transform.position, vfxPickup.transform.rotation, Game.Instance.transform);
 

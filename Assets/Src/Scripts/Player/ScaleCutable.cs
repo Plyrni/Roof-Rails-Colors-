@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class RodCutable : MonoBehaviour
+public class ScaleCutable : MonoBehaviour
 {
     [HideInInspector] public UnityEvent onCut;
     [SerializeField] private Direction axisUsedForRight;

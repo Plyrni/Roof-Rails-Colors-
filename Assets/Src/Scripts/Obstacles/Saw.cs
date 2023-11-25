@@ -76,24 +76,24 @@ public class Saw : MonoBehaviour
 
     protected virtual void OnValidPenetrationStay(Collider validCollider)
     {
-        RodCutable rodCutable = validCollider.gameObject.GetComponent<RodCutable>();
-        if (rodCutable)
+        ScaleCutable scaleCutable = validCollider.gameObject.GetComponent<ScaleCutable>();
+        if (scaleCutable)
         {
-            CutRodThatEntered(rodCutable);
+            CutRodThatEntered(scaleCutable);
             return;
         }
     }
 
 
 
-    private void CutRodThatEntered(RodCutable rod)
+    private void CutRodThatEntered(ScaleCutable scale)
     {
-        if (rod != null)
+        if (scale != null)
         {
             Vector3 playerDirection = Game.Player.transform.position - this.transform.position;
             Vector3 offset = (Vector3.right * Mathf.Sign(playerDirection.x)) * HalfSize;
             Vector3 cutPos = this.transform.position + offset;
-            GameObject fakeRod = rod.CutFromHitPos(cutPos);
+            GameObject fakeRod = scale.CutFromHitPos(cutPos);
             EjectCutRod(fakeRod, cutPos);
         }
     }

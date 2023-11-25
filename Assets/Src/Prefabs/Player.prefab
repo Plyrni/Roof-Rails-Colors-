@@ -71,13 +71,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 454499898}
-  - component: {fileID: 454499903}
   - component: {fileID: 454499902}
   - component: {fileID: 454499901}
   - component: {fileID: 454499900}
   - component: {fileID: 454499899}
   m_Layer: 10
-  m_Name: BladeCollision_nonBlocking
+  m_Name: BladeCollision_InteractWithSlicedPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -98,22 +97,6 @@ Transform:
   m_Father: {fileID: 1343328069}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &454499903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 454499897}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73b3bef7f11c37349bd259ef31d7537d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onCut:
-    m_PersistentCalls:
-      m_Calls: []
-  prefabRod2m: {fileID: 8778778186297236865, guid: 916dcfdf518ed8349b70cbc7fb884350, type: 3}
 --- !u!23 &454499902
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -134,7 +117,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a1c0dea5221e998428294c86635c83ab, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -250,6 +233,7 @@ MonoBehaviour:
   onCut:
     m_PersistentCalls:
       m_Calls: []
+  axisUsedForRight: 2
   prefabRod2m: {fileID: 8778778186297236865, guid: 916dcfdf518ed8349b70cbc7fb884350, type: 3}
 --- !u!114 &1343328076
 MonoBehaviour:
@@ -283,7 +267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26edf23734cb0f84db4c86fe5fdd23a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _waitTimeToCenterRod: 0.3
+  _waitTimeToCenterRod: 0.4
   _lerpSpeed: 50
 --- !u!114 &1343328075
 MonoBehaviour:
@@ -300,6 +284,7 @@ MonoBehaviour:
   _team: 0
   renderersToColorize:
   - {fileID: 1343328073}
+  - {fileID: 454499902}
 --- !u!23 &1343328073
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -320,7 +305,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a1c0dea5221e998428294c86635c83ab, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -442,7 +427,7 @@ Transform:
   m_GameObject: {fileID: 749373205119132299}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 1.1, z: 0.719}
-  m_LocalScale: {x: 0.45, y: 2.5, z: 0.45}
+  m_LocalScale: {x: 0.45, y: 5, z: 0.45}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 749373205411881103}
@@ -527,6 +512,7 @@ MonoBehaviour:
   onCut:
     m_PersistentCalls:
       m_Calls: []
+  axisUsedForRight: 0
   prefabRod2m: {fileID: 8778778186297236865, guid: 0626b6d8c94762d4ebbdaa5f6534a5bd, type: 3}
 --- !u!114 &1804148550
 MonoBehaviour:
@@ -610,8 +596,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _baseRodeSize: 4
-  _rod: {fileID: 1343328070}
-  _teamColorElement: {fileID: 5939819074133304742}
+  blade: {fileID: 1343328070}
+  _teamColorElement: {fileID: 1343328075}
 --- !u!114 &749373205411881100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -628,7 +614,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _sensivity: 500
-  _normalSpeed: 500
+  _normalSpeed: 650
   xMin: -3.65
   xMax: 3.65
   _capsule: {fileID: 1203996122}
