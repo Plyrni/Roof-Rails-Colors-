@@ -23,6 +23,9 @@ public class PlayerMovement : MonoBehaviour
     private bool _isGrounded;
     private float _currentSpeed;
     private Rigidbody _rigid;
+    private Vector3 _bumpVector;
+    private bool _isUserInputEnabled => _durationNoInputRemaining <= 0;
+    private float _durationNoInputRemaining;
 
     public void Reset()
     {
@@ -33,14 +36,24 @@ public class PlayerMovement : MonoBehaviour
 
         Application.targetFrameRate = -1;
     }
-
-    private Vector3 bumpVector;
+    
+    /// <summary></summary>
+    /// <param name="direction">Is normalized internaly</param>
+    /// <param name="force"></param>
     public void Bump(Vector3 direction, float force)
     {
-        bumpVector += direction * force;
+        _bumpVector += direction.normalized * force;
     }
-    
-    
+
+    public void DisableInputs(float duration)
+    {
+        if (duration < _durationNoInputRemaining)
+        {
+            return;
+        }
+        _durationNoInputRemaining = duration;
+    }
+
     private void Awake()
     {
         LeanTouch.OnGesture += ManageInputs;
@@ -59,14 +72,14 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-
+    
     private void FixedUpdate()
     {
         if (Game.State != GameState.Playing)
         {
             return;
         }
-
+        UpdateTimerDisabledInput();
         UpdateIsGrounded();
 
         Vector3 velocity = ComputeMoveVelocity();
@@ -95,16 +108,22 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 ComputeMoveVelocity()
     {
         Vector3 tempVelocity = rigid.velocity;
+        
         // Forward
         tempVelocity.z = _currentSpeed * Time.fixedDeltaTime;
 
-        // Horizontaly
-        tempVelocity.x = _horizontalMoveAccumulated;
+        // Horizontal player input
+        if (_isUserInputEnabled)
+        {
+            tempVelocity.x = _horizontalMoveAccumulated; // Override velocity X with swipe input. Nice responsive movement.
+        }
         _horizontalMoveAccumulated = 0;
 
-        tempVelocity += bumpVector;
-        bumpVector = Vector3.zero;
-        
+        // Apply potential bump
+        tempVelocity += _bumpVector;
+        _bumpVector = Vector3.zero;
+
+        // Computation complete
         return tempVelocity;
     }
 
@@ -139,7 +158,13 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
+    private void UpdateTimerDisabledInput()
+    {
+        if (_isUserInputEnabled == false)
+        {
+            _durationNoInputRemaining -= Time.fixedDeltaTime;
+        }
+    }
     private Rigidbody GetRigidBody()
     {
         if (_rigid == null)

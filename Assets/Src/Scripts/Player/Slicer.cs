@@ -46,5 +46,8 @@ public class Slicer : MonoBehaviour
         
         MeshCollider meshCollider = slicedPart.AddComponent<MeshCollider>();
         meshCollider.convex = true;
+
+        DelayedDestroy_ScaleDown delayDestroy = slicedPart.AddComponent<DelayedDestroy_ScaleDown>();
+        delayDestroy.timeToDestroy = Random.Range(2f, 3f);
     }
 }

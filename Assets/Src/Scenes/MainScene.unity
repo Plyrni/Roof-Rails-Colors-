@@ -1370,6 +1370,28 @@ MonoBehaviour:
   _player: {fileID: 1050475852}
   _mapManager: {fileID: 1927125562}
   _dataManager: {fileID: 1714029698}
+--- !u!114 &1240023550 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1343328075, guid: 8abc43732b5d371479c9d03120985192, type: 3}
+  m_PrefabInstance: {fileID: 749373205480439223}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa292def674b9634b90b7041f5bc5ddb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1240023553 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1343328070, guid: 8abc43732b5d371479c9d03120985192, type: 3}
+  m_PrefabInstance: {fileID: 749373205480439223}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73b3bef7f11c37349bd259ef31d7537d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1280428917
 GameObject:
   m_ObjectHideFlags: 3
@@ -1699,6 +1721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 918510cf4fb77204380ae5b0ffb98d7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  forceLoad: 1
 --- !u!1 &2025805634
 GameObject:
   m_ObjectHideFlags: 0
@@ -1755,9 +1778,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1199564258}
     m_Modifications:
+    - target: {fileID: 1343328068, guid: 8abc43732b5d371479c9d03120985192, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1343328070, guid: 8abc43732b5d371479c9d03120985192, type: 3}
+      propertyPath: axisUsedForRight
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1343328074, guid: 8abc43732b5d371479c9d03120985192, type: 3}
       propertyPath: _waitTimeToCenterRod
       value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 749373205119132298, guid: 8abc43732b5d371479c9d03120985192, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 749373205119132298, guid: 8abc43732b5d371479c9d03120985192, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 749373205119132299, guid: 8abc43732b5d371479c9d03120985192, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 749373205411881088, guid: 8abc43732b5d371479c9d03120985192, type: 3}
       propertyPath: m_Name
@@ -1767,6 +1810,14 @@ PrefabInstance:
       propertyPath: _normalSpeed
       value: 650
       objectReference: {fileID: 0}
+    - target: {fileID: 749373205411881101, guid: 8abc43732b5d371479c9d03120985192, type: 3}
+      propertyPath: _rod
+      value: 
+      objectReference: {fileID: 1240023553}
+    - target: {fileID: 749373205411881101, guid: 8abc43732b5d371479c9d03120985192, type: 3}
+      propertyPath: _teamColorElement
+      value: 
+      objectReference: {fileID: 1240023550}
     - target: {fileID: 749373205411881103, guid: 8abc43732b5d371479c9d03120985192, type: 3}
       propertyPath: m_RootOrder
       value: 1

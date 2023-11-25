@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 public class Saw : MonoBehaviour
 {
     private static readonly int ParamIsRotating = Animator.StringToHash("IsRotating");
-    private const float HalfSize = 0.225f;
+    private const float HalfSize = 0.22f;
 
     [SerializeField] private float _ejectionForce = 35f;
     [SerializeField] private float _ejectionTorqueForce = 100f;
@@ -94,7 +94,6 @@ public class Saw : MonoBehaviour
             Vector3 offset = (Vector3.right * Mathf.Sign(playerDirection.x)) * HalfSize;
             Vector3 cutPos = this.transform.position + offset;
             GameObject fakeRod = rod.CutFromHitPos(cutPos);
-
             EjectCutRod(fakeRod, cutPos);
         }
     }

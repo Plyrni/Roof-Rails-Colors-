@@ -9,6 +9,10 @@ public class MapManager : MonoBehaviour
     public Scene CurrentScene => _currentScene;
     private Scene _currentScene;
 
+#if UNITY_EDITOR
+    [SerializeField] private int forceLoad = 0;
+#endif
+
     public void SpawnLevel(int currentLevel)
     {
         if (_currentScene.IsValid())
@@ -21,6 +25,13 @@ public class MapManager : MonoBehaviour
         {
             levelToLoad = Random.Range(1, SceneManager.sceneCountInBuildSettings);
         }
+
+#if UNITY_EDITOR
+        if (forceLoad > 0)
+        {
+            levelToLoad = forceLoad;
+        }
+#endif
 
         SceneManager.LoadScene(levelToLoad, LoadSceneMode.Additive);
         _currentScene = SceneManager.GetSceneAt(SceneManager.sceneCount - 1);
