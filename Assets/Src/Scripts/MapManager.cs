@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -7,12 +8,12 @@ using Random = UnityEngine.Random;
 public class MapManager : MonoBehaviour
 {
     public Scene CurrentScene => _currentScene;
-    public Map Map => _currentMap ??= _currentScene.GetRootGameObjects()[0].transform.GetComponentInChildren<Map>();
-    
-    
+    public Transform MapTransform => _currentScene.GetRootGameObjects()[0].transform; // That's a quick fix for an "android only" bug (cf "GetMap"). I know it isn't optimal
+
+
     private Scene _currentScene;
     private Map _currentMap;
-    
+
 #if UNITY_EDITOR
     [SerializeField] private int forceLoad = 0;
 #endif
@@ -39,6 +40,39 @@ public class MapManager : MonoBehaviour
 
         SceneManager.LoadScene(levelToLoad, LoadSceneMode.Additive);
         _currentScene = SceneManager.GetSceneAt(SceneManager.sceneCount - 1);
+    }
+
+    /// <summary>
+    /// Bugged on android 
+    /// </summary>
+    /// <returns></returns>
+    private Map GetMap()
+    {
+        try
+        {
+            if (_currentMap == null || _currentMap is null)
+            {
+                var rootGameObjects = _currentScene.GetRootGameObjects();
+                if (rootGameObjects.Length > 0)
+                {
+                    _currentMap = rootGameObjects[0].GetComponentInChildren<Map>();
+                    if (_currentMap == null)
+                    {
+                        Debug.LogError("Map component not found in the children of the root GameObject.");
+                    }
+                }
+                else
+                {
+                    Debug.LogError("No root GameObjects found in the current scene.");
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Exception in GetMap: " + e.Message);
+        }
+
+        return _currentMap;
     }
 
     private void OnDestroy()
