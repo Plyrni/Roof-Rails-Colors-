@@ -26,6 +26,9 @@ public class Slicer : MonoBehaviour
         SlicedHull hull = objToSlice.Slice(endPoint.position, this.transform.up);
         if (hull != null)
         {
+            SliceableItem item = objToSlice.GetComponent<SliceableItem>();
+            item.NotifySlice();
+            
             GameObject upperHull = hull.CreateUpperHull(objToSlice, matSlice);
             GameObject lowerHull = hull.CreateLowerHull(objToSlice, matSlice);
 

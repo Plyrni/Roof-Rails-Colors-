@@ -49,7 +49,8 @@ public class PlayerMovement : MonoBehaviour
     {
         this.xMin = minX;
         this.xMax = maxX;
-    }
+        Debug.Log("MinX = " + minX + " | maxX = " + maxX);
+    } 
 
     public void EnableInputs()
     {
@@ -167,7 +168,7 @@ public class PlayerMovement : MonoBehaviour
         float posX = PredictPosition(rigid, Time.fixedDeltaTime).x;
         if (posX < xMin || posX > xMax)
         {
-            float newPosX = posX < 0 ? xMin : xMax;
+            float newPosX = posX > xMax ? xMax : xMin;
             Vector3 newVel = rigid.velocity;
             newVel.x = 0;
             rigid.velocity = newVel;

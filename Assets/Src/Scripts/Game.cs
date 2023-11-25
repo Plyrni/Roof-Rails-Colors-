@@ -13,13 +13,15 @@ public class Game : MonoBehaviour
     public static Scene Map => instance._mapManager.CurrentScene;
     public static Transform MapTransform => Map.GetRootGameObjects()[0].transform;
     public static MapManager MapManager => instance._mapManager;
-
+    public static Camera Camera => instance._camera;
+    
     private static Game instance;
 
     [SerializeField] private Player _player;
     [SerializeField] private MapManager _mapManager;
     [SerializeField] private DataManager _dataManager;
     [SerializeField] private GameStateMachine _stateMachine;
+    [SerializeField] private Camera _camera;
     private TeamColorManager _teamColorManager;
 
     private void Awake()
