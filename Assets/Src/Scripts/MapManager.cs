@@ -7,8 +7,12 @@ using Random = UnityEngine.Random;
 public class MapManager : MonoBehaviour
 {
     public Scene CurrentScene => _currentScene;
+    public Map Map => _currentMap ??= _currentScene.GetRootGameObjects()[0].transform.GetComponentInChildren<Map>();
+    
+    
     private Scene _currentScene;
-
+    private Map _currentMap;
+    
 #if UNITY_EDITOR
     [SerializeField] private int forceLoad = 0;
 #endif

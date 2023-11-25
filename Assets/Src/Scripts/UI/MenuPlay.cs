@@ -1,18 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuPlay : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private Button btnRetry;
     void Start()
     {
-        
+        btnRetry.onClick.AddListener(OnClickRetry);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnClickRetry()
     {
-        
+        Game.StateMachine.ChangeState(GameStateEnum.Home);
     }
 }

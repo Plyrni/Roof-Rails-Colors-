@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     // -- Privates
     [SerializeField] private float _baseRodeSize;
     [SerializeField] private ScaleCutable blade;
+    [SerializeField] private Transform _character;
     [SerializeField] private TeamColorElement _teamColorElement;
     private PlayerMovement _movement;
     private Rigidbody _rigidbody;
@@ -42,7 +43,7 @@ public class Player : MonoBehaviour
         Rigidbody.constraints = RigidbodyConstraints.None;
 
         GameObject bladeCopy = Instantiate(blade.gameObject, blade.transform.position, blade.transform.rotation,
-            Game.MapTransform);
+            Game.Map.transform);
         bladeCopy.AddComponent<Rigidbody>();
         bladeCopy.GetComponent<PlayerRodPositionner>().enabled = false;
 
@@ -61,9 +62,9 @@ public class Player : MonoBehaviour
     {
         Game.StateMachine.OnStateChanged.AddListener(OnChangeState);
         Game.Player.TeamColorManager.onCurrentTeamColorChange.AddListener(OnTeamColorChange);
+        blade.onCut.AddListener(OnCutBlade);
         Reset();
     }
-
     private void OnChangeState(GameStateEnum newStateEnum)
     {
         if (newStateEnum == GameStateEnum.Lose)
@@ -71,14 +72,17 @@ public class Player : MonoBehaviour
             Kill();
         }
     }
-
     private void OnTeamColorChange(TeamColor newTeamColor)
     {
         teamColorElement.SetTeam(newTeamColor);
     }
-
+    private void OnCutBlade()
+    {
+        
+    }
     private void OnDestroy()
     {
+        blade.onCut.RemoveListener(OnCutBlade);
         Game.StateMachine.OnStateChanged.RemoveListener(OnChangeState);
         if (TeamColorManager != null)
             TeamColorManager.onCurrentTeamColorChange.RemoveListener(OnTeamColorChange);

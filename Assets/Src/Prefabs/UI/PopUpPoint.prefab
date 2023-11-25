@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3141205920346700196}
   - component: {fileID: 8367001398981703902}
   - component: {fileID: 3701061530560949116}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,7 +60,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 8410474242871879630}
   - component: {fileID: 8763721520938427823}
   - component: {fileID: 2969010994037435162}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: PopUpPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

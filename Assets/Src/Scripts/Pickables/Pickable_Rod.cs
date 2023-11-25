@@ -23,7 +23,8 @@ public class Pickable_Rod : ItemPickable
         Game.Player.Blade.AddSize(sizeToAdd);
 
         Instantiate(vfxPickup, this.transform.position, vfxPickup.transform.rotation, Game.Instance.transform);
-
+        ParticleSystemRenderer rendererVFX = vfxPickup.GetComponent<ParticleSystemRenderer>();
+        rendererVFX.material = Game.DataManager.TeamColorData.GetTeamMaterial(_teamColorElement.Team);
         Destroy(gameObject);
     }
 

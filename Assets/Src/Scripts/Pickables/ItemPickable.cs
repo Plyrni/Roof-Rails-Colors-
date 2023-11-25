@@ -18,6 +18,6 @@ public class ItemPickable : MonoBehaviour
 
     protected virtual void OnValidColliderDetected(Collider other)
     {
-        Debug.Log("Detect " + other);
+        //Debug.Log("Detect " + other);
     }
 }

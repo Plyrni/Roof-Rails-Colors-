@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using Lean.Touch;
 using UnityEngine;
 
@@ -12,6 +13,11 @@ public class StateHome : GameState
         Game.Player.TeamColorManager.SetTeamColor(TeamColor.Yellow);
         Game.MapManager.SpawnLevel(Game.DataManager.GetLevel());
         Game.Player.Reset();
+        CinemachineVirtualCamera vcamPlay =Game.CameraManager.Vcam_Play;
+        Vector3 newpos = Game.Player.transform.position - Vector3.back * 1f + Vector3.up * 1f;
+        
+        CinemachineTransposer transposer = vcamPlay.GetCinemachineComponent<CinemachineTransposer>();
+        transposer.ForceCameraPosition(newpos,vcamPlay.transform.rotation);
     }
     public override void OnUpdate(float deltaTime)
     {

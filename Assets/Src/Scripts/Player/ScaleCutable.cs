@@ -8,10 +8,11 @@ using UnityEngine.Events;
 public class ScaleCutable : MonoBehaviour
 {
     [HideInInspector] public UnityEvent onCut;
+    [HideInInspector] public UnityEvent<float> onSetSize;
+    
     [SerializeField] private Direction axisUsedForRight;
     [SerializeField] private GameObject prefabRod2m;
     private float currentLength => this.transform.localScale.x * 2f;
-    //private float currentLength => this.transform.localScale.y * 2f; // Version used when the blade whas a rod
 
     private enum CutSide
     {
@@ -29,7 +30,7 @@ public class ScaleCutable : MonoBehaviour
         GameObject fakeRod = GenerateFakeRod(posOnRod, cutSide, lengthToCut);
         
         // Resize master rod 
-        ScaleRod(this.gameObject, currentLength - lengthToCut);
+        SetSize(currentLength - lengthToCut);
         // Reposition master Rod
         this.transform.localPosition = this.transform.localPosition + -GetCutDirection(cutSide) * (lengthToCut / 2f);
         
@@ -45,11 +46,12 @@ public class ScaleCutable : MonoBehaviour
     public void SetSize(float length)
     {
         ScaleRod(this.gameObject, length);
+        onSetSize?.Invoke(currentLength);
     }
 
     private GameObject GenerateFakeRod(Vector3 cutLocalPos, CutSide side, float length)
     {
-        Transform parent = Game.MapTransform;
+        Transform parent = Game.Map.transform;
         GameObject fakeRod = Instantiate(prefabRod2m, parent);
         ScaleRod(fakeRod, length);
 
@@ -75,7 +77,6 @@ public class ScaleCutable : MonoBehaviour
     {
         Vector3 localScale = this.transform.localScale;
         rod.transform.localScale = new Vector3(length / 2f, localScale.y, localScale.z);
-        //rod.transform.localScale = new Vector3(localScale.x,length/2f,localScale.z); // Version used when the blade whas a rod
     }
 
     private Vector3 GetCutDirection(CutSide side)
@@ -86,5 +87,6 @@ public class ScaleCutable : MonoBehaviour
     private void OnDestroy()
     {
         onCut.RemoveAllListeners();
+        onSetSize.RemoveAllListeners();
     }
 }

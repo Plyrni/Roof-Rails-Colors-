@@ -17,11 +17,11 @@ public class SliceableItem : MonoBehaviour
 
     private void SpawnPopUp()
     {
-        PopUpPoints newPopUp = Instantiate(popup, Game.MapTransform);
+        PopUpPoints newPopUp = Instantiate(popup, Game.Map.transform);
         newPopUp.transform.position = this.transform.position + Vector3.up * 1f;
         
         // Make it look toward the camera
-        newPopUp.transform.forward = newPopUp.transform.position - Game.Camera.transform.position; 
+        newPopUp.transform.forward = newPopUp.transform.position - Game.CameraManager.Camera.transform.position; 
         newPopUp.SetPoints(value);
         
         // Destroy it after some time

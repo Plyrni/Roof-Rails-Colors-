@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -20,6 +21,7 @@ public class TeamColorElement : MonoBehaviour
         _team = teamColor;
         SetColor(_team);
     }
+    
     private void SetColor(TeamColor color)
     {
         foreach (var renderer in renderersToColorize)

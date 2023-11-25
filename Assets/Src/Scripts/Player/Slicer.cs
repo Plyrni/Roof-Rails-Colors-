@@ -45,7 +45,7 @@ public class Slicer : MonoBehaviour
     {
         debug_nbSlicePartGenerated++;
         slicedPart.name += debug_nbSlicePartGenerated;
-        slicedPart.transform.parent = Game.MapTransform;
+        slicedPart.transform.parent = Game.Map.transform;
         slicedPart.layer = LayerMask.NameToLayer("SlicedPart");
         
         Rigidbody rigid = slicedPart.AddComponent<Rigidbody>();

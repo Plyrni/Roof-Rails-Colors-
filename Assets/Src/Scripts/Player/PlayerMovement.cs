@@ -49,7 +49,6 @@ public class PlayerMovement : MonoBehaviour
     {
         this.xMin = minX;
         this.xMax = maxX;
-        Debug.Log("MinX = " + minX + " | maxX = " + maxX);
     } 
 
     public void EnableInputs()

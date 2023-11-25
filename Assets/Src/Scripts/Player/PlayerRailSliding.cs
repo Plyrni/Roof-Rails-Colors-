@@ -22,7 +22,11 @@ public class PlayerRailSliding : MonoBehaviour
 
     private void LateUpdate()
     {
-        // TODO : Check game state
+        if (Game.State == GameStateEnum.Lose)
+        {
+            return;
+        }
+        
         if (nbRailEntered > 0 && _player.MovementComponent.IsGrounded == false)
         {
             if (nbRailEntered == 1)

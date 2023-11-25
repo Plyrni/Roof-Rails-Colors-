@@ -10,10 +10,9 @@ public class Game : MonoBehaviour
     public static GameStateEnum State => Instance._stateMachine.CurrentStateEnum;
     public static GameStateMachine StateMachine => Instance._stateMachine;
     public static DataManager DataManager => Instance._dataManager;
-    public static Scene Map => instance._mapManager.CurrentScene;
-    public static Transform MapTransform => Map.GetRootGameObjects()[0].transform;
+    public static Map Map => instance._mapManager.Map;
     public static MapManager MapManager => instance._mapManager;
-    public static Camera Camera => instance._camera;
+    public static CameraManager CameraManager => instance._cameraManager;
     
     private static Game instance;
 
@@ -21,8 +20,7 @@ public class Game : MonoBehaviour
     [SerializeField] private MapManager _mapManager;
     [SerializeField] private DataManager _dataManager;
     [SerializeField] private GameStateMachine _stateMachine;
-    [SerializeField] private Camera _camera;
-    private TeamColorManager _teamColorManager;
+    [SerializeField] private CameraManager _cameraManager;
 
     private void Awake()
     {
