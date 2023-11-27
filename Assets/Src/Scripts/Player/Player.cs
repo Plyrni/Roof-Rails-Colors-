@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     private TeamColorManager _teamColorManager;
     private GameRegion _currentRegion;
 
-
+    
     public void Reset()
     {
         Rigidbody.MovePosition(Vector3.zero + Vector3.up * 0.05f);
@@ -37,7 +37,6 @@ public class Player : MonoBehaviour
         blade.SetSize(_baseRodeSize);
         SetRegion(GameRegion.NONE);
     }
-
     public void Kill()
     {
         Rigidbody.constraints = RigidbodyConstraints.None;
@@ -51,7 +50,6 @@ public class Player : MonoBehaviour
 
         MovementComponent.DisableInputs(Mathf.Infinity);
     }
-
     public void SetRegion(GameRegion newRegion)
     {
         _currentRegion = newRegion;
@@ -64,7 +62,9 @@ public class Player : MonoBehaviour
         Game.Player.TeamColorManager.onCurrentTeamColorChange.AddListener(OnTeamColorChange);
         blade.onCut.AddListener(OnCutBlade);
         Reset();
+
     }
+    
     private void OnChangeState(GameStateEnum newStateEnum)
     {
         if (newStateEnum == GameStateEnum.Lose)
@@ -78,7 +78,6 @@ public class Player : MonoBehaviour
     }
     private void OnCutBlade()
     {
-        
     }
     private void OnDestroy()
     {

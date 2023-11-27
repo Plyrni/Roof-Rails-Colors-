@@ -2903,6 +2903,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 749373205411881100, guid: 8abc43732b5d371479c9d03120985192, type: 3}
+      propertyPath: vfxLand
+      value: 
+      objectReference: {fileID: 195466, guid: 56c3274d2f9ec214ab584a80b5ce2d6d, type: 3}
+    - target: {fileID: 749373205411881101, guid: 8abc43732b5d371479c9d03120985192, type: 3}
+      propertyPath: vfxLand
+      value: 
+      objectReference: {fileID: 195466, guid: 56c3274d2f9ec214ab584a80b5ce2d6d, type: 3}
     - target: {fileID: 749373205411881103, guid: 8abc43732b5d371479c9d03120985192, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -2947,9 +2955,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 749373205675393995, guid: 8abc43732b5d371479c9d03120985192, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 010feb9ca17ded046aeefcc2b6bf909b, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8abc43732b5d371479c9d03120985192, type: 3}

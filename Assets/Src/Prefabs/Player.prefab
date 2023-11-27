@@ -769,8 +769,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _baseRodeSize: 4
   blade: {fileID: 1343328070}
-  _character: {fileID: 0}
+  _character: {fileID: 749373204403210412}
   _teamColorElement: {fileID: 1343328075}
+  vfxLand: {fileID: 0}
 --- !u!114 &749373205411881100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -929,7 +930,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 010feb9ca17ded046aeefcc2b6bf909b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

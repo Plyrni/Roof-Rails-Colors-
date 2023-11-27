@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float xMin;
     [SerializeField] private float xMax;
     [SerializeField] private CapsuleCollider _capsule;
+    [SerializeField] private GameObject vfxLand;
 
     private Rigidbody rigid => _rigid ??= GetComponent<Rigidbody>();
     private float _horizontalMoveAccumulated = 0;
@@ -26,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _bumpVector;
     private bool _isUserInputEnabled => _durationNoInputRemaining <= 0;
     private float _durationNoInputRemaining;
+    private float _fallStartY = 0;
 
     public void Reset()
     {
@@ -35,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
         _horizontalMoveAccumulated = 0f;
         EnableInputs();
         Application.targetFrameRate = -1;
+        _fallStartY = this.transform.position.y;
     }
 
     /// <summary></summary>
@@ -49,12 +52,13 @@ public class PlayerMovement : MonoBehaviour
     {
         this.xMin = minX;
         this.xMax = maxX;
-    } 
+    }
 
     public void EnableInputs()
     {
         _durationNoInputRemaining = 0;
     }
+
     public void DisableInputs(float duration)
     {
         if (duration < _durationNoInputRemaining)
@@ -69,6 +73,7 @@ public class PlayerMovement : MonoBehaviour
     {
         LeanTouch.OnGesture += ManageInputs;
         Game.StateMachine.OnStateChanged.AddListener(OnChangeState);
+        onGroundedStateChange.AddListener(UpdateFall);
 
         _currentSpeed = _normalSpeed;
     }
@@ -162,6 +167,23 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void UpdateFall(bool isGrounded)
+    {
+        if (isGrounded)
+        {
+            float fallDist = this.transform.position.y - _fallStartY;
+            if (fallDist < -1f)
+            {
+                GameObject landVFX = Instantiate(vfxLand, this.transform.position + Vector3.forward * 0.5f,
+                    vfxLand.transform.rotation);
+            }
+        }
+        else
+        {
+            _fallStartY = this.transform.position.y;
+        }
+    }
+    
     private void ClampPlayerPos()
     {
         float posX = PredictPosition(rigid, Time.fixedDeltaTime).x;
@@ -183,15 +205,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private Rigidbody GetRigidBody()
-    {
-        if (_rigid == null)
-        {
-            _rigid ??= GetComponent<Rigidbody>();
-        }
-
-        return _rigid;
-    }
 
     private void OnDestroy()
     {
