@@ -10,7 +10,9 @@ using UnityEngine.Serialization;
 public class PlayerMovement : MonoBehaviour
 {
     [HideInInspector] public UnityEvent<bool> onGroundedStateChange;
+    [HideInInspector] public UnityEvent<bool> onIsMovingChange;
     public bool IsGrounded => _isGrounded;
+    public bool IsMoving => _isMoving;
 
     [SerializeField] private float _sensivity;
     [SerializeField] private float _normalSpeed;
@@ -28,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     private bool _isUserInputEnabled => _durationNoInputRemaining <= 0;
     private float _durationNoInputRemaining;
     private float _fallStartY = 0;
+    private bool _isMoving;
 
     public void Reset()
     {
@@ -91,29 +94,29 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Game.State != GameStateEnum.Playing)
+        if (Game.State == GameStateEnum.Playing)
         {
-            return;
+            UpdateTimerDisabledInput();
+            UpdateIsGrounded();
+
+            Vector3 velocity = ComputeMoveVelocity();
+
+            // Reset gravity force if on ground
+            if (_isGrounded && rigid.velocity.x < 0)
+            {
+                velocity.y = 0;
+            }
+
+            // Apply velocity
+            rigid.velocity = velocity;
+
+            if (_isGrounded)
+            {
+                ClampPlayerPos();
+            }
         }
 
-        UpdateTimerDisabledInput();
-        UpdateIsGrounded();
-
-        Vector3 velocity = ComputeMoveVelocity();
-
-        // Reset gravity force if on ground
-        if (_isGrounded && rigid.velocity.x < 0)
-        {
-            velocity.y = 0;
-        }
-
-        // Apply velocity
-        rigid.velocity = velocity;
-
-        if (_isGrounded)
-        {
-            ClampPlayerPos();
-        }
+        UpdateIsMoving();
     }
 
     private void ManageInputs(List<LeanFinger> fingers)
@@ -155,10 +158,22 @@ public class PlayerMovement : MonoBehaviour
         return rb.position + rb.velocity * timeAhead;
     }
 
+    private void UpdateIsMoving()
+    {
+        bool tempIsMoving = _rigid.velocity.z > 1f;
+
+        if (tempIsMoving != _isMoving)
+        {
+            _isMoving = tempIsMoving;
+            onIsMovingChange.Invoke(_isMoving);
+        }
+    }
+
     private void UpdateIsGrounded()
     {
         Ray rayDown = new Ray(this.transform.position + this.transform.up * 0.01f, -this.transform.up);
-        bool newGroundedState = Physics.Raycast(rayDown, 0.02f);
+        bool newGroundedState = Physics.Raycast(rayDown, out RaycastHit hit, 0.03f, ~0,
+            QueryTriggerInteraction.Ignore);
 
         if (newGroundedState != _isGrounded)
         {
@@ -183,7 +198,7 @@ public class PlayerMovement : MonoBehaviour
             _fallStartY = this.transform.position.y;
         }
     }
-    
+
     private void ClampPlayerPos()
     {
         float posX = PredictPosition(rigid, Time.fixedDeltaTime).x;
