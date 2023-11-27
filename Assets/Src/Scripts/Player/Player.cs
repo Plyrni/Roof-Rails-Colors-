@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
@@ -11,6 +12,8 @@ public class Player : MonoBehaviour
     public PlayerRailSliding RailSliding => _railSliding ??= GetComponent<PlayerRailSliding>();
     public TeamColorManager TeamColorManager => _teamColorManager ??= GetComponent<TeamColorManager>();
     public GameRegion Region => _currentRegion;
+    public UnityEvent onKill;
+    public bool isKilled;
 
     // -- Protected
     protected TeamColorElement teamColorElement => _teamColorElement;
@@ -20,13 +23,14 @@ public class Player : MonoBehaviour
     [SerializeField] private ScaleCutable blade;
     [SerializeField] private Transform _character;
     [SerializeField] private TeamColorElement _teamColorElement;
+    [SerializeField] private ScaleCutable prefabBlade;
     private PlayerMovement _movement;
     private Rigidbody _rigidbody;
     private PlayerRailSliding _railSliding;
     private TeamColorManager _teamColorManager;
     private GameRegion _currentRegion;
+    private bool _isKilled = false;
 
-    
     public void Reset()
     {
         Rigidbody.MovePosition(Vector3.zero + Vector3.up * 0.05f);
@@ -34,22 +38,31 @@ public class Player : MonoBehaviour
         MovementComponent.Reset();
         RailSliding.Reset();
         blade.gameObject.SetActive(true);
-        blade.SetSize(_baseRodeSize);
+        blade.SetLength(_baseRodeSize);
         SetRegion(GameRegion.NONE);
+        _isKilled = false;
     }
+
     public void Kill()
     {
+        if (_isKilled)
+        {
+            return;
+        }
+        _isKilled = true;
+
         Rigidbody.constraints = RigidbodyConstraints.None;
-
-        GameObject bladeCopy = Instantiate(blade.gameObject, blade.transform.position, blade.transform.rotation,
-            Game.Map.transform);
-        bladeCopy.AddComponent<Rigidbody>();
-        bladeCopy.GetComponent<PlayerRodPositionner>().enabled = false;
-
         blade.gameObject.SetActive(false);
-
         MovementComponent.DisableInputs(Mathf.Infinity);
+
+        ScaleCutable bladeCopy = Instantiate(prefabBlade, blade.transform.position, blade.transform.rotation,
+            Game.Map.transform);
+        bladeCopy.gameObject.AddComponent<Rigidbody>();
+        bladeCopy.gameObject.GetComponent<PlayerRodPositionner>().enabled = false;
+        bladeCopy.SetLength(blade.CurrentLength);
+        onKill?.Invoke();
     }
+
     public void SetRegion(GameRegion newRegion)
     {
         _currentRegion = newRegion;
@@ -62,9 +75,8 @@ public class Player : MonoBehaviour
         Game.Player.TeamColorManager.onCurrentTeamColorChange.AddListener(OnTeamColorChange);
         blade.onCut.AddListener(OnCutBlade);
         Reset();
-
     }
-    
+
     private void OnChangeState(GameStateEnum newStateEnum)
     {
         if (newStateEnum == GameStateEnum.Lose)
@@ -72,13 +84,16 @@ public class Player : MonoBehaviour
             Kill();
         }
     }
+
     private void OnTeamColorChange(TeamColor newTeamColor)
     {
         teamColorElement.SetTeam(newTeamColor);
     }
+
     private void OnCutBlade()
     {
     }
+
     private void OnDestroy()
     {
         blade.onCut.RemoveListener(OnCutBlade);

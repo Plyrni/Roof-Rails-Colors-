@@ -9,10 +9,10 @@ public class ScaleCutable : MonoBehaviour
 {
     [HideInInspector] public UnityEvent onCut;
     [HideInInspector] public UnityEvent<float> onSetSize;
+    public float CurrentLength => this.transform.localScale.x * 2f;
     
     [SerializeField] private Direction axisUsedForRight;
     [SerializeField] private GameObject prefabRod2m;
-    private float currentLength => this.transform.localScale.x * 2f;
 
     private enum CutSide
     {
@@ -25,12 +25,12 @@ public class ScaleCutable : MonoBehaviour
         Vector3 posOnRod = ProjectOnRod(hitPos - this.transform.position);
         float distFromCenter = posOnRod.magnitude;
         CutSide cutSide = ComputeCutSide(posOnRod);
-        float lengthToCut = (currentLength / 2) - distFromCenter;
+        float lengthToCut = (CurrentLength / 2) - distFromCenter;
         
         GameObject fakeRod = GenerateFakeRod(posOnRod, cutSide, lengthToCut);
         
         // Resize master rod 
-        SetSize(currentLength - lengthToCut);
+        SetLength(CurrentLength - lengthToCut);
         // Reposition master Rod
         this.transform.localPosition = this.transform.localPosition + -GetCutDirection(cutSide) * (lengthToCut / 2f);
         
@@ -48,15 +48,15 @@ public class ScaleCutable : MonoBehaviour
         return ComputeCutSide(localPos) == CutSide.Left ? Direction.Left : Direction.Right; 
     }
     
-    public void AddSize(float add)
+    public void AddLength(float add)
     {
-        SetSize(currentLength + add);
+        SetLength(CurrentLength + add);
     }
 
-    public void SetSize(float length)
+    public void SetLength(float length)
     {
         ScaleRod(this.gameObject, length);
-        onSetSize?.Invoke(currentLength);
+        onSetSize?.Invoke(CurrentLength);
     }
 
     private GameObject GenerateFakeRod(Vector3 cutLocalPos, CutSide side, float length)

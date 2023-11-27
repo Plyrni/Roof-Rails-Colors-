@@ -3119,6 +3119,10 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2662390945564300780, guid: 8abc43732b5d371479c9d03120985192, type: 3}
+      propertyPath: _vfxSparks
+      value: 
+      objectReference: {fileID: 198628060487912908, guid: 9a905dc8b3b361840bb50c14f05926a9, type: 3}
     - target: {fileID: 2823665626621743023, guid: 8abc43732b5d371479c9d03120985192, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.004462563

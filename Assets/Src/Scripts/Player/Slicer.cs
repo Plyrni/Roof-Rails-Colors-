@@ -1,16 +1,26 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using EzySlice;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Slicer : MonoBehaviour
 {
+    private Rigidbody rigid => _rigid ??= GetComponent<Rigidbody>();
+
     [SerializeField] private Transform startPoint;
     [SerializeField] private Transform endPoint;
     [SerializeField] private LayerMask sliceableLayer;
     [SerializeField] private Material matSlice;
     [SerializeField] private float forceOnCut = 5f;
     [SerializeField] private Rigidbody _rigid;
+
+    private void Start()
+    {
+        if (_rigid == null)
+            _rigid = GetComponentInParent<Rigidbody>();
+    }
 
     void FixedUpdate()
     {
@@ -28,7 +38,7 @@ public class Slicer : MonoBehaviour
         {
             SliceableItem item = objToSlice.GetComponent<SliceableItem>();
             item.NotifySlice();
-            
+
             GameObject upperHull = hull.CreateUpperHull(objToSlice, matSlice);
             GameObject lowerHull = hull.CreateLowerHull(objToSlice, matSlice);
 
@@ -40,18 +50,18 @@ public class Slicer : MonoBehaviour
     }
 
     private static int debug_nbSlicePartGenerated = 0;
-    
+
     private void SetupSlicedPart(GameObject slicedPart, Vector3 bladeDirection)
     {
         debug_nbSlicePartGenerated++;
         slicedPart.name += debug_nbSlicePartGenerated;
         slicedPart.transform.parent = Game.Map.transform;
         slicedPart.layer = LayerMask.NameToLayer("SlicedPart");
-        
+
         Rigidbody rigid = slicedPart.AddComponent<Rigidbody>();
         rigid.AddForce(-bladeDirection * forceOnCut, ForceMode.Impulse);
-        rigid.AddForce(_rigid.velocity / 2, ForceMode.VelocityChange);
-        
+        rigid.AddForce(this.rigid.velocity / 2, ForceMode.VelocityChange);
+
         MeshCollider meshCollider = slicedPart.AddComponent<MeshCollider>();
         meshCollider.convex = true;
 

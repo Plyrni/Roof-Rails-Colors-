@@ -20,7 +20,7 @@ public class Pickable_Rod : ItemPickable
 
     protected override void OnValidColliderDetected(Collider other)
     {
-        Game.Player.Blade.AddSize(sizeToAdd);
+        Game.Player.Blade.AddLength(sizeToAdd);
 
         ParticleSystem vfx = Instantiate(vfxPickup, this.transform.position, vfxPickup.transform.rotation, Game.Instance.transform);
         ParticleSystemRenderer rendererVFX = vfx.GetComponent<ParticleSystemRenderer>();
