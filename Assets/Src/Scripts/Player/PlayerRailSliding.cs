@@ -7,12 +7,14 @@ using UnityEngine.Events;
 public class PlayerRailSliding : MonoBehaviour
 {
     [HideInInspector] public UnityEvent onLandOnRail;
+    [HideInInspector] public UnityEvent onExitRail;
+    public bool IsSliding => _nbRailEntered >= 2;
     private Player _player;
-    private int nbRailEntered = 0;
+    private int _nbRailEntered = 0;
 
     public void Reset()
     {
-        nbRailEntered = 0;
+        _nbRailEntered = 0;
     }
 
     private void Awake()
@@ -29,9 +31,9 @@ public class PlayerRailSliding : MonoBehaviour
             return;
         }
         
-        if (nbRailEntered > 0 && _player.MovementComponent.IsGrounded == false)
+        if (_nbRailEntered > 0 && _player.MovementComponent.IsGrounded == false)
         {
-            if (nbRailEntered == 1)
+            if (_nbRailEntered == 1)
             {
                 if (_player.Region == GameRegion.FinalZone)
                 {
@@ -49,7 +51,7 @@ public class PlayerRailSliding : MonoBehaviour
     {
         if (Game.State == GameStateEnum.Playing)
         {
-            nbRailEntered += 1;
+            _nbRailEntered += 1;
             onLandOnRail?.Invoke();
         }
     }
@@ -58,7 +60,8 @@ public class PlayerRailSliding : MonoBehaviour
     {
         if (Game.State == GameStateEnum.Playing)
         {
-            nbRailEntered -= 1;
+            _nbRailEntered -= 1;
+            onExitRail?.Invoke();
         }
     }
 
