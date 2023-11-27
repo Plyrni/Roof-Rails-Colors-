@@ -22,7 +22,8 @@ public class PlayerBladePositionner : MonoBehaviour
         _blade = GetComponent<ScaleCutable>();
         _timeSinceCut = Mathf.Infinity;
         _baseLocalPos = this.transform.localPosition;
-        _baseHandleLocalPos = _handle.localPosition;
+        if (_handle != null)
+            _baseHandleLocalPos = _handle.localPosition;
     }
 
     private void Start()
@@ -105,7 +106,7 @@ public class PlayerBladePositionner : MonoBehaviour
         _tweenLocalPosZ.Kill();
         _tweenLocalPosZ = this.transform.DOLocalMoveZ(_baseLocalPos.z + zOffset, duration).SetUpdate(UpdateType.Manual)
             .SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutSine);
-        
+
         if (_handle != null)
         {
             _handle.transform.DOKill();
@@ -113,6 +114,7 @@ public class PlayerBladePositionner : MonoBehaviour
                 .SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutSine);
         }
     }
+
     private void TryResetTimer_Centering()
     {
         // Only reset if timer not running

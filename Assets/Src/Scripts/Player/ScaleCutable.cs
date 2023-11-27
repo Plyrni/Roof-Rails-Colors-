@@ -91,7 +91,9 @@ public class ScaleCutable : MonoBehaviour
     {
         return side == CutSide.Right ? transform.GetDirection(axisUsedForRight) : -transform.GetDirection(axisUsedForRight);
     }
-
+    
+    
+    
     private void OnDestroy()
     {
         onCut.RemoveAllListeners();

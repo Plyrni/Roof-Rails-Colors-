@@ -135,6 +135,7 @@ MonoBehaviour:
   sizeToAdd: 0.6
   vfxPickup: {fileID: 2079096086071143462, guid: 562ff5034205d2245a1e0f0fc1bb08dd, type: 3}
   _teamColorElement: {fileID: 1406267360505047819}
+  prefabBlade: {fileID: 8778778186297236865, guid: 12d6e05fc95edd044b61b428033b4602, type: 3}
 --- !u!135 &8803497258874234892
 SphereCollider:
   m_ObjectHideFlags: 0

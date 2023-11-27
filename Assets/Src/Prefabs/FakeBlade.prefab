@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 294113868712678922}
   - component: {fileID: 5709135415714300029}
   m_Layer: 8
-  m_Name: 2mBlade
+  m_Name: FakeBlade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
