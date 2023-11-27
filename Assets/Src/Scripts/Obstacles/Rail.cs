@@ -6,18 +6,24 @@ using UnityEngine.Events;
 
 public class Rail : MonoBehaviour
 {
-    [HideInInspector] public static UnityEvent OnMasterRodEnter = new UnityEvent();
-    [HideInInspector] public static UnityEvent OnMasterRodExit = new UnityEvent();
+    [HideInInspector] public static UnityEvent<Rail> OnBladeEnter = new UnityEvent<Rail>();
+    [HideInInspector] public static UnityEvent<Rail> OnBladeExit = new UnityEvent<Rail>();
     
     [SerializeField] private float  _bumpForce;
+    [SerializeField] private Direction _axis; 
     private bool _isPenetratedByRod;
+        
+    public Vector3 GetAxis()
+    {
+        return this.transform.GetDirection(_axis);
+    }
     
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Rod"))
         {
             _isPenetratedByRod = true;
-            OnMasterRodEnter?.Invoke();
+            OnBladeEnter?.Invoke(this);
         }
     }
 
@@ -26,7 +32,7 @@ public class Rail : MonoBehaviour
         if (other.CompareTag("Rod"))
         {
             _isPenetratedByRod = false;
-            OnMasterRodExit?.Invoke();
+            OnBladeExit?.Invoke(this);
         }
     }
 

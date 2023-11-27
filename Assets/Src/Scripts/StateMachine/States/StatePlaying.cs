@@ -7,6 +7,7 @@ public class StatePlaying : GameState
     public override void OnEnter()
     {
         base.OnEnter();
+        Game.CameraManager.SetPlayerCam();
     }
     public override void OnUpdate(float deltaTime)
     {

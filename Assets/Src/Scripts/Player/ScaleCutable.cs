@@ -37,7 +37,17 @@ public class ScaleCutable : MonoBehaviour
         onCut?.Invoke();
         return fakeRod;
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns>Left or Right</returns>
+    public Direction ComputePointDirection(Vector3 worldPos)
+    {
+        Vector3 localPos = worldPos - this.transform.position;
+        
+        return ComputeCutSide(localPos) == CutSide.Left ? Direction.Left : Direction.Right; 
+    }
+    
     public void AddSize(float add)
     {
         SetSize(currentLength + add);

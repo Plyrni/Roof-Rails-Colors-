@@ -14,37 +14,54 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera _vcam_Play;
     [SerializeField] private CinemachineVirtualCamera _vcam_Play_ZoomBack1;
     [SerializeField] private CinemachineVirtualCamera _vcam_Play_ZoomBack2;
+    [SerializeField] private CinemachineVirtualCamera _vcam_Home;
     [SerializeField] private float _minLengthToStartZoomBack = 10f;
     [SerializeField] private float _minLengthToZoomBackAgain = 15f;
 
+    public void SetPlayerCam()
+    {
+        DisableAllCameras();
+        _vcam_Play.gameObject.SetActive(true);   
+    }
+    public void SetHomeCam()
+    {
+        DisableAllCameras();
+        _vcam_Home.gameObject.SetActive(true);
+    }
+    
+    
     private void Start()
     {
         Game.Player.Blade.onSetSize.AddListener(OnPlayerBladeChangeSize);
      }
-
     private void OnPlayerBladeChangeSize(float newLength)
     {
         if (newLength > _minLengthToZoomBackAgain)
         {
             // Big dezoom
-            _vcam_Play.gameObject.SetActive(false);
-            _vcam_Play_ZoomBack1.gameObject.SetActive(false);
+            DisableAllCameras();
             _vcam_Play_ZoomBack2.gameObject.SetActive(true);
         }
         else if (newLength > _minLengthToStartZoomBack)
         {
             // Dezoom
-            _vcam_Play.gameObject.SetActive(false);
+            DisableAllCameras();
             _vcam_Play_ZoomBack1.gameObject.SetActive(true);
         }
         else
         {
             // Normal zoom
+            DisableAllCameras();
             _vcam_Play.gameObject.SetActive(true);
-            _vcam_Play_ZoomBack1.gameObject.SetActive(false);
         }
     }
-
+    private void DisableAllCameras()
+    {
+        _vcam_Play.gameObject.SetActive(false);
+        _vcam_Play_ZoomBack1.gameObject.SetActive(false);
+        _vcam_Play_ZoomBack2.gameObject.SetActive(false);
+    }
+    
     private void OnDestroy()
     {
         Game.Player.Blade.onSetSize.RemoveListener(OnPlayerBladeChangeSize);
