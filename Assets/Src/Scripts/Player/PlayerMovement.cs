@@ -122,9 +122,12 @@ public class PlayerMovement : MonoBehaviour
     private void ManageInputs(List<LeanFinger> fingers)
     {
         LeanFinger finger = fingers[0];
-        if (finger.IsActive && !finger.StartedOverGui)
+        if (finger.IsActive)
         {
-            _horizontalMoveAccumulated += (finger.ScreenDelta.x / Screen.width) * _sensivity;
+            if (Game.State == GameStateEnum.Playing)
+            {
+                _horizontalMoveAccumulated += (finger.ScreenDelta.x / Screen.width) * _sensivity;
+            }
         }
     }
 
@@ -224,6 +227,7 @@ public class PlayerMovement : MonoBehaviour
     private void OnDestroy()
     {
         onGroundedStateChange.RemoveAllListeners();
+        onIsMovingChange.RemoveAllListeners();
         Game.StateMachine.OnStateChanged.RemoveListener(OnChangeState);
     }
 }

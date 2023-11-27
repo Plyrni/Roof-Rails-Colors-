@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     public TeamColorManager TeamColorManager => _teamColorManager ??= GetComponent<TeamColorManager>();
     public GameRegion Region => _currentRegion;
     public UnityEvent onKill;
-    public bool isKilled;
+    public bool IsKilled => _isKilled;
 
     // -- Protected
     protected TeamColorElement teamColorElement => _teamColorElement;
@@ -58,8 +58,9 @@ public class Player : MonoBehaviour
         ScaleCutable bladeCopy = Instantiate(prefabBlade, blade.transform.position, blade.transform.rotation,
             Game.Map.transform);
         bladeCopy.gameObject.AddComponent<Rigidbody>();
-        bladeCopy.gameObject.GetComponent<PlayerRodPositionner>().enabled = false;
+        bladeCopy.gameObject.GetComponent<PlayerBladePositionner>().enabled = false;
         bladeCopy.SetLength(blade.CurrentLength);
+        bladeCopy.GetComponentInChildren<TeamColorElement>().SetTeam(_teamColorManager.CurrentTeamColor);
         onKill?.Invoke();
     }
 
@@ -97,6 +98,7 @@ public class Player : MonoBehaviour
     private void OnDestroy()
     {
         blade.onCut.RemoveListener(OnCutBlade);
+        onKill.RemoveAllListeners();
         Game.StateMachine.OnStateChanged.RemoveListener(OnChangeState);
         if (TeamColorManager != null)
             TeamColorManager.onCurrentTeamColorChange.RemoveListener(OnTeamColorChange);

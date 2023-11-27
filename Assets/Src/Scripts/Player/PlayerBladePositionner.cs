@@ -1,7 +1,8 @@
+using DG.Tweening;
 using UnityEngine;
 
 
-public class PlayerRodPositionner : MonoBehaviour
+public class PlayerBladePositionner : MonoBehaviour
 {
     [SerializeField] private float _waitTimeToCenterRod = 0.5f;
     [SerializeField] private float _lerpSpeed = 0.5f;
@@ -9,20 +10,27 @@ public class PlayerRodPositionner : MonoBehaviour
     private bool _isCentering;
     private bool _isTimerRunning => _timeSinceCut < _waitTimeToCenterRod;
     private Player _playerOwner;
-    private ScaleCutable scale;
+    private ScaleCutable _blade;
+    private Vector3 _baseLocalPos;
+    private Vector3 _baseHandleLocalPos;
+    private Tween _tweenLocalPosZ = null;
+    [SerializeField] private Transform _handle;
 
     private void Awake()
     {
         _playerOwner = GetComponentInParent<Player>();
-        scale = GetComponent<ScaleCutable>();
+        _blade = GetComponent<ScaleCutable>();
         _timeSinceCut = Mathf.Infinity;
+        _baseLocalPos = this.transform.localPosition;
+        _baseHandleLocalPos = _handle.localPosition;
     }
 
     private void Start()
     {
         _playerOwner.MovementComponent.onGroundedStateChange.AddListener(OnPlayerGroundStateChange);
-        scale.onCut.AddListener(OnPlayerRodCut);
+        _blade.onCut.AddListener(OnBladeCut);
     }
+
 
     private void Update()
     {
@@ -38,9 +46,14 @@ public class PlayerRodPositionner : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (_tweenLocalPosZ != null)
+        {
+            _tweenLocalPosZ.ManualUpdate(Time.fixedDeltaTime, Time.unscaledTime);
+        }
+
         if (_isCentering)
         {
-            Vector3 currentLocalPos = scale.transform.localPosition;
+            Vector3 currentLocalPos = _blade.transform.localPosition;
             float blend = Mathf.Pow(0.5f, Time.fixedDeltaTime * _lerpSpeed);
             float newLocalX = Mathf.Lerp(currentLocalPos.x, 0, blend);
 
@@ -54,7 +67,7 @@ public class PlayerRodPositionner : MonoBehaviour
             Vector3 newRodLocalPos = currentLocalPos;
             newRodLocalPos.x = newLocalX;
 
-            scale.transform.localPosition = newRodLocalPos;
+            _blade.transform.localPosition = newRodLocalPos;
         }
     }
 
@@ -78,11 +91,28 @@ public class PlayerRodPositionner : MonoBehaviour
     {
     }
 
-    private void OnPlayerRodCut()
+    private void OnBladeCut()
     {
+        KnockbackFeedback();
         TryResetTimer_Centering();
     }
 
+    private void KnockbackFeedback()
+    {
+        float zOffset = -0.25f;
+        float duration = 0.1f;
+
+        _tweenLocalPosZ.Kill();
+        _tweenLocalPosZ = this.transform.DOLocalMoveZ(_baseLocalPos.z + zOffset, duration).SetUpdate(UpdateType.Manual)
+            .SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutSine);
+        
+        if (_handle != null)
+        {
+            _handle.transform.DOKill();
+            _handle.transform.DOLocalMoveZ(_baseHandleLocalPos.z + zOffset, duration).SetUpdate(UpdateType.Fixed)
+                .SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutSine);
+        }
+    }
     private void TryResetTimer_Centering()
     {
         // Only reset if timer not running
@@ -97,6 +127,6 @@ public class PlayerRodPositionner : MonoBehaviour
         if (_playerOwner != null)
             _playerOwner.MovementComponent.onGroundedStateChange.RemoveListener(OnPlayerGroundStateChange);
 
-        scale.onCut.RemoveListener(OnPlayerRodCut);
+        _blade.onCut.RemoveListener(OnBladeCut);
     }
 }

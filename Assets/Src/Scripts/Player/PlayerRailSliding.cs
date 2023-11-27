@@ -174,5 +174,7 @@ public class PlayerRailSliding : MonoBehaviour
     {
         Rail.OnBladeEnter.RemoveListener(OnBladeEnterRail);
         Rail.OnBladeExit.RemoveListener(OnBladeExitRail);
+        onExitRail.RemoveAllListeners();
+        onLandOnRail.RemoveAllListeners();
     }
 }

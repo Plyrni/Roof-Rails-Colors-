@@ -65,9 +65,7 @@ public class ScaleCutable : MonoBehaviour
         GameObject fakeRod = Instantiate(prefabRod2m, parent);
         ScaleRod(fakeRod, length);
 
-        // Position fake rod
         fakeRod.transform.position = this.transform.position + cutLocalPos + GetCutDirection(side) * (length / 2f);
-        fakeRod.transform.rotation = this.transform.rotation;
 
         return fakeRod;
     }

@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 1
+  m_Fog: 0
   m_FogColor: {r: 0.23375754, g: 0.45794222, b: 0.9716981, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.0025
@@ -519,6 +519,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 99796505}
   m_CullTransparentMesh: 1
+--- !u!4 &232484273 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1003448984375603702, guid: 8abc43732b5d371479c9d03120985192, type: 3}
+  m_PrefabInstance: {fileID: 749373205480439223}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &247179528
 GameObject:
   m_ObjectHideFlags: 0
@@ -3067,6 +3072,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1199564258}
     m_Modifications:
+    - target: {fileID: 1343328073, guid: 8abc43732b5d371479c9d03120985192, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1343328074, guid: 8abc43732b5d371479c9d03120985192, type: 3}
+      propertyPath: _handle
+      value: 
+      objectReference: {fileID: 232484273}
     - target: {fileID: 749373205411881088, guid: 8abc43732b5d371479c9d03120985192, type: 3}
       propertyPath: m_Name
       value: Player
