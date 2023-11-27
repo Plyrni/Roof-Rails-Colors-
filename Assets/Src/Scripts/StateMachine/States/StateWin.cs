@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class StateWin : GameState
 {
+    private DataManager dataManager = null;
+
     public override void OnEnter()
     {
         base.OnEnter();
-        Game.DataManager.IncrementLevel();
+        if (dataManager == null)
+            dataManager = Game.DataManager;
+
+        dataManager.IncrementLevel();
+
     }
+
     public override void OnUpdate(float deltaTime)
     {
         base.OnUpdate(deltaTime);
@@ -22,5 +29,9 @@ public class StateWin : GameState
     public override void OnExit()
     {
         base.OnExit();
+        
+        // Add multiplicated coins
+        float totalGains = dataManager.NbCurrencyGainedDuringLevel * dataManager.WinMultiplier;
+        dataManager.AddCurrency(Mathf.CeilToInt(totalGains - dataManager.NbCurrencyGainedDuringLevel));
     }
 }

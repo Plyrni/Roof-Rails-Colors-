@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,13 +10,22 @@ public class DataManager : MonoBehaviour
 
     [HideInInspector] public UnityEvent<int> onAddCurrency;
     public SO_TeamColorData TeamColorData => _teamColorData;
+    public int NbCurrencyGainedDuringLevel => _nbCurrencyGainedDuringLevel;
+    public float WinMultiplier => _winMultiplier;
 
     [SerializeField] private SO_TeamColorData _teamColorData;
-    private int nbCurrencyGainedDuringLevel = 0;
+    private int _nbCurrencyGainedDuringLevel = 0; // It would have been better to put it inside "Map.cs" but i stumbled on an "android only" bug preventing me to access it somehow. I'll dig that later
+    private float _winMultiplier = 1; // Same here
 
     private void Start()
     {
         Game.StateMachine.OnStateChanged.AddListener(OnGameStateChange);
+        onAddCurrency.AddListener(OnAddCurrency);
+    }
+
+    public void SetWinMultiplier(float winMultiplier)
+    {
+        _winMultiplier = winMultiplier;
     }
 
 
@@ -67,7 +74,7 @@ public class DataManager : MonoBehaviour
 
     private void OnAddCurrency(int amountAdded)
     {
-        nbCurrencyGainedDuringLevel += amountAdded;
+        _nbCurrencyGainedDuringLevel += amountAdded;
     }
 
     #endregion
@@ -77,7 +84,14 @@ public class DataManager : MonoBehaviour
     {
         if (newState == GameStateEnum.Home)
         {
-            nbCurrencyGainedDuringLevel = 0;
+            _nbCurrencyGainedDuringLevel = 0;
+            _winMultiplier = 1;
         }
+    }
+
+    private void OnDestroy()
+    {
+        onAddCurrency.RemoveListener(OnAddCurrency);
+        Game.StateMachine.OnStateChanged.RemoveListener(OnGameStateChange);
     }
 }

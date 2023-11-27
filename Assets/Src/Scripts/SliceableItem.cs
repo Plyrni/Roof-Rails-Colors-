@@ -6,9 +6,11 @@ using UnityEngine;
 
 public class SliceableItem : MonoBehaviour
 {
-    [SerializeField] private int value;
-    [SerializeField] private PopUpPoints popup; 
+    public bool IsSliced => _isSliced;
     
+    [SerializeField] private int value;
+    [SerializeField] private PopUpPoints popup;
+    private bool _isSliced = false;
     public void NotifySlice()
     {
         Game.DataManager.AddCurrency(value);

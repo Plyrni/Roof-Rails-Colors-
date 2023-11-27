@@ -27,18 +27,22 @@ public class Slicer : MonoBehaviour
         bool hasHit = Physics.Linecast(startPoint.position, endPoint.position, out RaycastHit hit, sliceableLayer);
         if (hasHit)
         {
-            Slice(hit.transform.gameObject);
+            SliceableItem item = hit.transform.gameObject.GetComponent<SliceableItem>();
+            if (item != null && item.IsSliced == false)
+            {
+                if (TrySlice(hit.transform.gameObject))
+                {
+                    item.NotifySlice();
+                }
+            }
         }
     }
 
-    public void Slice(GameObject objToSlice)
+    public bool TrySlice(GameObject objToSlice)
     {
         SlicedHull hull = objToSlice.Slice(endPoint.position, this.transform.up);
         if (hull != null)
         {
-            SliceableItem item = objToSlice.GetComponent<SliceableItem>();
-            item.NotifySlice();
-
             GameObject upperHull = hull.CreateUpperHull(objToSlice, matSlice);
             GameObject lowerHull = hull.CreateLowerHull(objToSlice, matSlice);
 
@@ -46,7 +50,10 @@ public class Slicer : MonoBehaviour
             SetupSlicedPart(lowerHull, this.transform.up);
 
             Destroy(objToSlice);
+            return true;
         }
+
+        return false;
     }
 
     private static int debug_nbSlicePartGenerated = 0;
