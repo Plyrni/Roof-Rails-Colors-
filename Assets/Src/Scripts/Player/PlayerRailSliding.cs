@@ -2,9 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerRailSliding : MonoBehaviour
 {
+    [HideInInspector] public UnityEvent onLandOnRail;
     private Player _player;
     private int nbRailEntered = 0;
 
@@ -48,6 +50,7 @@ public class PlayerRailSliding : MonoBehaviour
         if (Game.State == GameStateEnum.Playing)
         {
             nbRailEntered += 1;
+            onLandOnRail?.Invoke();
         }
     }
 

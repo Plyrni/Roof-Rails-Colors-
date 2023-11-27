@@ -10,6 +10,7 @@ public class PlayerAnimations : MonoBehaviour
     
     private static readonly int _paramIsMoving = Animator.StringToHash("isMoving");
     private static readonly int _paramIsGrounded = Animator.StringToHash("isGrounded");
+    private static readonly int _paramLandedOnRail = Animator.StringToHash("landedOnRail");
 
     private void Awake()
     {
@@ -20,6 +21,12 @@ public class PlayerAnimations : MonoBehaviour
         
         _player.MovementComponent.onGroundedStateChange.AddListener(OnGroundedStateChange);
         _player.MovementComponent.onIsMovingChange.AddListener(OnIsMovingChange);
+        _player.RailSliding.onLandOnRail.AddListener(OnLandOnRail);
+    }
+
+    private void OnLandOnRail()
+    {
+        _animator.SetTrigger(_paramLandedOnRail);
     }
 
     private void OnIsMovingChange(bool isMoving)
