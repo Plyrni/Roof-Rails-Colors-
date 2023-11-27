@@ -1,4 +1,5 @@
 using System;
+using Sirenix.OdinInspector.Editor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -11,6 +12,7 @@ public class Player : MonoBehaviour
     public Rigidbody Rigidbody => _rigidbody ??= GetComponent<Rigidbody>();
     public PlayerRailSliding RailSliding => _railSliding ??= GetComponent<PlayerRailSliding>();
     public TeamColorManager TeamColorManager => _teamColorManager ??= GetComponent<TeamColorManager>();
+    public Character Character => _character;
     public GameRegion Region => _currentRegion;
     public UnityEvent onKill;
     public bool IsKilled => _isKilled;
@@ -21,9 +23,10 @@ public class Player : MonoBehaviour
     // -- Privates
     [SerializeField] private float _baseRodeSize;
     [SerializeField] private ScaleCutable blade;
-    [SerializeField] private Transform _character;
     [SerializeField] private TeamColorElement _teamColorElement;
+    [SerializeField] private Character _character;
     [SerializeField] private ScaleCutable prefabBlade;
+
     private PlayerMovement _movement;
     private Rigidbody _rigidbody;
     private PlayerRailSliding _railSliding;
@@ -41,6 +44,7 @@ public class Player : MonoBehaviour
         blade.SetLength(_baseRodeSize);
         SetRegion(GameRegion.NONE);
         _isKilled = false;
+        Character.EnableMatNoFricton(false);
     }
 
     public void Kill()
@@ -49,12 +53,16 @@ public class Player : MonoBehaviour
         {
             return;
         }
+
         _isKilled = true;
 
-        Rigidbody.constraints = RigidbodyConstraints.None;
+        //Rigidbody.constraints = RigidbodyConstraints.None;
         blade.gameObject.SetActive(false);
         MovementComponent.DisableInputs(Mathf.Infinity);
-
+        Character.EnableMatNoFricton(true);
+        //Character.EnableRagdoll();
+        //Game.CameraManager.SetCurrentCamTarget(Character.RigidRagdoll.transform);
+        
         ScaleCutable bladeCopy = Instantiate(prefabBlade, blade.transform.position, blade.transform.rotation,
             Game.Map.transform);
         bladeCopy.gameObject.AddComponent<Rigidbody>();

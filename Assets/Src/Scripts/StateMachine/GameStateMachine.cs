@@ -14,6 +14,14 @@ public class GameStateMachine : ABaseStateMachine<GameState, GameStateEnum>
 
     [HideInInspector] public UnityEvent<GameStateEnum> OnStateChanged;
 
+    private void Awake()
+    {
+        stateHome.Init();
+        statePlaying.Init();
+        stateWin.Init();
+        stateLose.Init();
+    }
+
     private void LateUpdate()
     {
         if (CurrentState != null)

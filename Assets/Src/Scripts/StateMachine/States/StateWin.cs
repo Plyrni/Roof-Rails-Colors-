@@ -6,6 +6,11 @@ public class StateWin : GameState
 {
     private DataManager dataManager = null;
 
+    public override void Init()
+    {
+        base.Init();
+        Game.Player.Character.onCreateRagdoll.AddListener(OnPlayerCreateRagdoll);
+    }
     public override void OnEnter()
     {
         base.OnEnter();
@@ -13,7 +18,6 @@ public class StateWin : GameState
             dataManager = Game.DataManager;
 
         dataManager.IncrementLevel();
-
     }
 
     public override void OnUpdate(float deltaTime)
@@ -33,5 +37,15 @@ public class StateWin : GameState
         // Add multiplicated coins
         float totalGains = dataManager.NbCurrencyGainedDuringLevel * dataManager.WinMultiplier;
         dataManager.AddCurrency(Mathf.CeilToInt(totalGains - dataManager.NbCurrencyGainedDuringLevel));
+    }
+
+    private void OnPlayerCreateRagdoll(GameObject ragdoll)
+    {
+        //Game.CameraManager.SetCurrentCamTarget(ragdoll.GetComponentInChildren<Rigidbody>().transform);
+    }
+
+    ~StateWin()
+    {
+        Game.Player.Character.onCreateRagdoll.RemoveListener(OnPlayerCreateRagdoll);
     }
 }

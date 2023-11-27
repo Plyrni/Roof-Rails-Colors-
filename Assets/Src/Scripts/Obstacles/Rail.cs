@@ -11,7 +11,7 @@ public class Rail : MonoBehaviour
     
     [SerializeField] private float  _bumpForce;
     [SerializeField] private Direction _axis; 
-    private bool _isPenetratedByRod;
+    
         
     public Vector3 GetAxis()
     {
@@ -22,7 +22,6 @@ public class Rail : MonoBehaviour
     {
         if (other.CompareTag("Rod"))
         {
-            _isPenetratedByRod = true;
             OnBladeEnter?.Invoke(this);
         }
     }
@@ -31,7 +30,6 @@ public class Rail : MonoBehaviour
     {
         if (other.CompareTag("Rod"))
         {
-            _isPenetratedByRod = false;
             OnBladeExit?.Invoke(this);
         }
     }

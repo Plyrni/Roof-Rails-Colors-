@@ -29,6 +29,7 @@ public class PlayerAnimations : MonoBehaviour
     private void OnExitRail()
     {
         _animator.SetBool(_paramIsSliding, _player.RailSliding.IsSliding);
+        _animator.ResetTrigger(_paramLandedOnRail);
     }
 
     private void OnLandOnRail()

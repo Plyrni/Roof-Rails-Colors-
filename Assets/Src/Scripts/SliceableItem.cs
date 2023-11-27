@@ -27,6 +27,6 @@ public class SliceableItem : MonoBehaviour
         newPopUp.SetPoints(value);
         
         // Destroy it after some time
-        newPopUp.transform.DOScale(0, 0.3f).SetEase(Ease.OutBack).SetDelay(2f).OnComplete(() => Destroy(newPopUp));
+        newPopUp.transform.DOScale(0, 0.3f).SetEase(Ease.OutBack).SetDelay(2f).OnComplete(() => Destroy(newPopUp.gameObject));
     }
 }

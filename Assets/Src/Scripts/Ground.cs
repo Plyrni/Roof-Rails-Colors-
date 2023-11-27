@@ -15,11 +15,15 @@ public class Ground : MonoBehaviour
         }
         else if (other.collider.CompareTag("Rod"))
         {
-            Game.StateMachine.ChangeState(GameStateEnum.Lose);
-            Vector3 bumpDir = Game.Player.transform.position.x > this.transform.position.x
-                ? transform.right
-                : -transform.right;
-            Game.Player.Rigidbody.AddForce((bumpDir + Vector3.forward).normalized * 3f,ForceMode.Impulse);
+            Player player = Game.Player;
+            if (Game.State == GameStateEnum.Playing && player.Region != GameRegion.FinalZone)
+            {
+                Game.StateMachine.ChangeState(GameStateEnum.Lose);
+                Vector3 bumpDir = player.transform.position.x > this.transform.position.x
+                    ? transform.right
+                    : -transform.right;
+                player.Rigidbody.AddForce((bumpDir + Vector3.forward).normalized * 3f, ForceMode.Impulse);
+            }
         }
     }
 }

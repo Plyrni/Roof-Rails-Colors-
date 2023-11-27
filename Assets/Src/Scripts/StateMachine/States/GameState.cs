@@ -2,10 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using Lean.Touch;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 [System.Serializable]
 public class GameState : IState
 {
+    public virtual void Init()
+    {
+        
+    }
+    
     public virtual void OnEnter()
     {
         LeanTouch.OnGesture += ManageInputs;

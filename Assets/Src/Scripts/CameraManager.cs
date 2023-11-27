@@ -17,23 +17,42 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera _vcam_Home;
     [SerializeField] private float _minLengthToStartZoomBack = 10f;
     [SerializeField] private float _minLengthToZoomBackAgain = 15f;
+    private CinemachineBrain _cineBrain;
+
+    private void Awake()
+    {
+        _cineBrain = GetComponentInChildren<CinemachineBrain>();
+    }
 
     public void SetPlayerCam()
     {
         DisableAllCameras();
-        _vcam_Play.gameObject.SetActive(true);   
+        _vcam_Play.gameObject.SetActive(true);
     }
+
     public void SetHomeCam()
     {
         DisableAllCameras();
         _vcam_Home.gameObject.SetActive(true);
     }
-    
-    
+
+    public void SetCurrentCamTarget(Transform target)
+    {
+        CinemachineVirtualCamera currVCam = (_cineBrain.ActiveVirtualCamera as CinemachineVirtualCamera);
+        if (currVCam == null) // It is null at the first frame
+        {
+            currVCam = _vcam_Home;
+        }
+
+        currVCam.Follow = target;
+    }
+
+
     private void Start()
     {
         Game.Player.Blade.onSetSize.AddListener(OnPlayerBladeChangeSize);
-     }
+    }
+
     private void OnPlayerBladeChangeSize(float newLength)
     {
         if (newLength > _minLengthToZoomBackAgain)
@@ -55,13 +74,14 @@ public class CameraManager : MonoBehaviour
             _vcam_Play.gameObject.SetActive(true);
         }
     }
+
     private void DisableAllCameras()
     {
         _vcam_Play.gameObject.SetActive(false);
         _vcam_Play_ZoomBack1.gameObject.SetActive(false);
         _vcam_Play_ZoomBack2.gameObject.SetActive(false);
     }
-    
+
     private void OnDestroy()
     {
         Game.Player.Blade.onSetSize.RemoveListener(OnPlayerBladeChangeSize);
