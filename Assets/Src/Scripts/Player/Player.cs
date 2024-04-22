@@ -1,8 +1,6 @@
 using System;
-using Sirenix.OdinInspector.Editor;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
